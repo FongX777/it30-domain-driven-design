@@ -8,3 +8,37 @@
 
 在本系列小弟將會為各位介紹這套在國外風行的設計方法，希望大家能夠打破「程式歸程式、業務歸業務」的迷思，一起學習寫出更易懂、維護的程式碼吧！
 同時也會搭配 Clean architecture, TDD, BDD 等方法一起開發！
+
+## Learning Roadmap
+
+- Strategic Design
+  - A simple intro - Thinking in Language
+  - Subdomains & Bounded Context
+  - Bounded Context More
+  - Context Mapping Patterns
+  - Event Storming
+  - Event Storming Contd.
+- Architecture Design
+  - Layered & Onion/Clean Architecture
+  - Port-Adapter Architecture
+  - Communication with other Bounded Contect
+  - TDD and BDD w/ use case
+  - TDD and BDD example
+- Tactical Design
+  - Entity
+  - Value Object
+  - Aggregate Design
+  - Factory
+  - Domain Event
+  - Application Service
+  - Repository
+  - Domain Service
+- Hands-On Project
+  - Get started with TypeScript
+  - A simple project
+  - CQRS on project & examples
+  - Event Sourcing & examples
+- Working with Legacy
+
+* [GETTING STARTED WITH DDD WHEN SURROUNDED BY LEGACY SYSTEMS](http://domainlanguage.com/wp-content/uploads/2016/04/GettingStartedWithDDDWhenSurroundedByLegacySystemsV1.pdf)
+* How to introduce into your team?
