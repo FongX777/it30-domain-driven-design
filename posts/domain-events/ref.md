@@ -1,0 +1,4 @@
+- 領域事件：設計和實作 https://docs.microsoft.com/zh-tw/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-events-design-implementation#domain-events-versus-integration-events
+- A better domain events pattern https://lostechies.com/jimmybogard/2014/05/13/a-better-domain-events-pattern/
+- Handling domain events https://piotrgankiewicz.com/2016/08/01/handling-domain-events/
+- Strengthening your domain: Domain Events https://lostechies.com/jimmybogard/2010/04/08/strengthening-your-domain-domain-events/
