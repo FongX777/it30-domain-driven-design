@@ -53,6 +53,15 @@ DDD 是一個以**商業知識與語言**為程式設計準則以**解決複雜�
 
 至於該怎麼做到有效溝通，會在之後的章節介紹 Bounded Context 、 Event Storming 以及 use case 搜集中提到。
 
+### DDD 的設計模式
+
+與領域專家討論出 Ubiquitous Language 後，就可以開始套用 DDD 的各種設計模式，而這些模式大致上可以分為兩類：Strategic Design (戰略設計) 與 Tactical Design (戰術設計)。
+
+- Strategic Design 戰略設計：利用與領域專家溝通的結果，將問題拆分出 Subdomain 與 Bounded Context 確立問題與解決方案的邊界，並定義 Bounded Context 間的關係。
+- Tactical Design 戰術設計：又稱 Model-Driven Design ，基於 Strategic Design 建立好的 Bounded Context 之上，利用一系列的設計模式將業務邏輯化為程式碼，保護業務核心的穩定性。
+
+以上兩個模式就是之後本系列的主軸。
+
 ## 如何使用 DDD
 
 用一個簡單的例子讓大家快速理解 DDD 帶來的改變：格鬥類電玩。
@@ -145,37 +154,7 @@ barista.serveOrderTo(order, customer);
 
 > 使用 DDD 前，改 code 就像是在玩七龍珠，蒐集齊到四散各地的邏輯後才能完成理解怎麼修改。
 
-### DDD 的進階模式
-
-對於 DDD 有基本的概念後，接下來幾篇我將會帶各位進入 DDD 的幾項知名的設計模式，而大致上可以分為兩類：戰略與戰術。
-
-- Strategic Design 戰略設計：利用 Use Case 捕捉業務模型拆分出 Subdomain ，並依此建立 Bounded Context 。
-- Tactical Design 戰術設計：又稱 Model-Driven Design ，透過 Strategic Design 建立好的邊界與語言，透過一系列的 pattern 化為程式碼，保護業務核心的穩定性。
-
-### Strategic Design 戰略設計
-
-戰略設計目的在於協助我們建立 domain knowledge 並將其拆分成合理的區塊一一處理，同時也使我們理解軟體的核心價值在哪裡。戰略包括：
-
-- 與領域專家互動建立 Domain 與解決方案。
-- 將 Domain 切成若干 Subdomain 並找出 Core Subdomain 。
-- 對應 Subdomain 來為解決方案做分類並建立邊界： Bounded Context (限界上下文，之後會詳談) 。
-- Bounded Context 同時也有語言邊界的功能，所以可以在其中定義 Ubiquitous Language 。
-- 定義不同 Bouund Context 之間的互動模式 Context Mapping 。
-
-### Tactical Design 戰術設計
-
-戰術設計幫助我們運用一些成熟的 design pattern 將 Bounded Context 轉為程式碼。有以下 Design Pattern 供使用：
-
-- Entity
-- Value Object
-- Aggregate
-- Repository
-- Factory
-- Domain Event
-- Domain Service
-- Application Service
-
-### Benefits
+## 使用 DDD 的優缺點
 
 1. 促進跨團隊的溝通
 2. 更精準的捕捉 Use Case
@@ -193,6 +172,12 @@ barista.serveOrderTo(order, customer);
 4. 需要豐富的領域知識
 5. 學習成本高
 6. 不適合高度科技專業的專案
+
+如果還不確定是否該引入，可以參考這張 DDD 適合度計分卡:
+
+![socre board](./score-card.png)
+(source: [2019-02-20-ddd taiwan-community-iddd-studygroup-1st](https://www.slideshare.net/kimKao/20190220ddd-taiwancommunityidddstudygroup1st))  
+(origin post: http://www.informit.com/articles/article.aspx?p=1944876&seqNum=2)
 
 ## Common Questions
 
@@ -213,12 +198,6 @@ DDD 一開始的學習成本並不便宜，
 此外，對於尚未找到穩定盈利商業模式的團隊來說，過度投資在技術的風險也太大，且團隊內並沒有 domain expert 可以提供方向。
 
 可以參考這支影片:[Turn your startup in a stayup with DDD — Marijn Huizendveld](https://www.youtube.com/watch?v=E8QAa55tCtw)
-
-或是也可以參考這張 DDD 適合度計分卡:
-
-![socre board](./score-card.png)
-(source: [2019-02-20-ddd taiwan-community-iddd-studygroup-1st](https://www.slideshare.net/kimKao/20190220ddd-taiwancommunityidddstudygroup1st))  
-(origin post: http://www.informit.com/articles/article.aspx?p=1944876&seqNum=2)
 
 不過也是有社群的朋友分享過即使是小專案，他也會利用 DDD 的部分 pattern 來快速建立模型，所以這部分其實見仁見智，對於 DDD 相當熟悉的人其實反而能在開發上更快速、正確的開發。
 
