@@ -4,7 +4,7 @@
 
 > 在這個時代，寫程式從來沒有那麼簡單過，但要解決的問題也空前的困難。
 
-軟體的核心是他為使用者解決領域相關問題的能力。隨著許多如金融、電商、社交等行業提供的服務越來越強大，軟體的需求也跟著複雜起來，身為一名工程師已經不能單純只做好一顆螺絲釘就能完成任務。
+軟體的核心是他為使用者解決領域相關問題的能力。隨著許多如金融、電商、社交等行業提供的服務越來越強大，軟體需求的複雜度也跟著起飛。身為一名工程師已經不能單純只做好自己的螺絲釘就能完成任務。
 
 大多時候，程式設計的重點並不在於使用哪個框架技術或優化幾個百分比，而是在於**是否能忠實解決業務的需求** 。
 
@@ -16,7 +16,7 @@
 
 > 開發其實是一場學習的過程，程式碼只是過程的副產物。
 
-## DDD 是什麼
+## 💎 DDD 是什麼
 
 介紹 DDD 是什麼之前，我們先定義領域 (Domain) 是什麼。廣泛來說， domain (knowledge) 是指「一塊知識的範圍」。實務上，就是指「你工作上所需的一切知識集合」，包含「問題」以及「解決方案」。
 
@@ -28,18 +28,21 @@
 2. 切分 domain 出數個 subdomain (子領域) ，並專注在核心 subdomain 。
 3. 透過一系列設計模式，將 domain 的知識注入進程式模型 (model) 中。
 
-現代軟體的複雜特性，沒有一個人或是團隊可以單獨掌握所有的知識細節，甚至連領域專家的理解都可能有所缺漏。為了要盡可能獲取知識的全貌，我們需要持續不斷進行團隊溝通以及與客戶交流。而在這個過程中，我們將有共識的知識提煉出來，進而形成 **Ubiquitous Language (通用語言)**。
+現代軟體的複雜特性，沒有一個人或是團隊可以單獨掌握所有的知識細節，甚至連領域專家的理解都可能有所缺漏。為了要盡可能獲取知識的全貌，我們將溝通所得到的知識提煉出來達成共識後，建立 **Ubiquitous Language (通用語言)**，減少溝通的成本。
+
+(註：這我非常有感覺，以「客人」一詞而言，對於開發人員與業務就有完全不同的含義，導致溝通時常常卡住，但以「消費者」與「店家」作為 Ubiquitous Language 時，就完全沒有歧異。)
 
 在神話故事[巴別塔](https://zh.wikipedia.org/wiki/巴別塔)中，上帝分化人類的語言讓他們彼此無法溝通以懲罰他們的自大。有趣的是，在應用 DDD 的過程，不同團隊藉由溝通形塑出 Ubiquitous Language ，讓彼此互相理解，進而開發正確的軟體，~~最後發大財~~ 。
 
 ![img](./ubiquitous-language.png)
-(工程與商業交流後，發現其實需要的不過是訂單、商品與會員管理三個功能)
+(開發與商業團隊交流後，發現其實系統需要的是訂單、商品與會員管理三個功能，並且規定大家要用 Ubiquitous Language 互相溝通)
 
 整個過程可以參考這張圖：
+
 ![img](./ddd-process.jpeg)
 (source: [Patterns, Principles, and Practices of Domain-Driven Design ](https://www.amazon.com/Patterns-Principles-Practices-Domain-Driven-Design/dp/1118714709))
 
-至於該怎麼做到有效溝通形塑 Ubiquitous Language ，會在之後的章節介紹 Event Storming 事件風暴。
+至於該怎麼做到有效溝通建立 Ubiquitous Language ，會在之後的章節介紹 Event Storming 事件風暴。
 
 ### DDD 的設計模式
 
@@ -50,7 +53,7 @@
 
 以上兩個模式就是之後本系列的主軸。
 
-## DDD 帶來的改變
+## 💪 DDD 帶來的改變
 
 前面講了很多抽象的詞彙如提升業務理解、保護商業邏輯等等，讓我們來看一下在實作上，應用了 DDD 精神的程式碼會帶來什麼樣的改變。
 
@@ -143,7 +146,7 @@ barista.serveOrderTo(order, customer);
 
 修改後可以發現，程式的行為都十分貼近現時使用情境，讓即使不會寫程式碼的人都可以看懂了！
 
-## 總結： DDD 的優缺點
+## 📝 總結： DDD 的優缺點
 
 使用 DDD 有以下優點：
 
@@ -172,7 +175,7 @@ barista.serveOrderTo(order, customer);
 (source: [2019-02-20-ddd taiwan-community-iddd-studygroup-1st](https://www.slideshare.net/kimKao/20190220ddd-taiwancommunityidddstudygroup1st))  
 (origin post: http://www.informit.com/articles/article.aspx?p=1944876&seqNum=2)
 
-## Common Questions
+## ❓Common Questions
 
 ### 1. 什麼！？那不就代表我必須離開電腦先跟業務人員開一堆會嗎？
 
