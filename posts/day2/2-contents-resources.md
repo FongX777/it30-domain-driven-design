@@ -100,11 +100,15 @@ DDD 主要分為兩大部分，分別為：
 ### 文章
 
 - [Martin Fowler - DDD series](https://martinfowler.com/tags/domain%20driven%20design.html) 看來連馬丁花都是 DDD 的粉絲呢～
-- [InfoQ Domain-Driven-Design](https://www.infoq.com/domain-driven-design/) 裡面蠻多簡中與英文的資源
+- [InfoQ Domain-Driven-Design](https://www.infoq.com/domaindrivendesign/) 裡面蠻多簡中與英文的資源
 - [ThoughtWorks](https://www.thoughtworks.com) [簡中](https://info.thoughtworks.com/CN-Company-Introduction.html) 裡面也有許多高質量文章
 - [Microsoft .NET DDD Guide](https://docs.microsoft.com/zh-tw/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/)
+- [khalilstemmler](https://khalilstemmler.com/articles/categories/domain-driven-design/) 蠻多 TypeScript 實作。
+- [Udi Dahan ](http://udidahan.com/articles/)
 - [LosTechies.com](https://lostechies.com/jimmybogard/2010/02/04/strengthening-your-domain-a-primer/)
 - [知乎 DDD ](https://www.zhihu.com/topic/19826540/hot)
+
+更多資源可以上 [Awesome DDD](https://github.com/heynickc/awesome-ddd) 查看～
 
 ### 線上課程
 
