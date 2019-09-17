@@ -18,6 +18,8 @@ DDD 主要分為兩大部分，分別為：
 
 戰略設計目的在於協助我們建立 domain knowledge 並將其拆分成合理的區塊一一處理，同時也使我們理解軟體的核心價值在哪裡。戰略包括：
 
+![img](./strategic.jpeg)
+
 - 與領域專家互動建立 Domain 與解決方案。
 - 將 Domain 切成若干 Subdomain 並找出 Core Subdomain 。
 - 對應 Subdomain 來為解決方案做分類並建立邊界： Bounded Context (限界上下文，之後會詳談) 。
@@ -29,6 +31,8 @@ DDD 主要分為兩大部分，分別為：
 ### Tactical Design 戰術設計
 
 戰術設計幫助我們運用一些成熟的 design pattern 將 Bounded Context 轉為程式碼。有以下 Design Pattern 供使用：
+
+![](./tactical.jpeg)
 
 - Entity: 有 id 概念、狀態可被變更的物件。
 - Value Object: 無 id 概念、狀態不可變更的物件。
@@ -44,7 +48,7 @@ DDD 主要分為兩大部分，分別為：
 
 由於 DDD 大部分資源都以英文為主，且中文翻譯又容易有歧異，所以為了希望大家未來能無縫接軌英語資源，在專有名詞使用上，我都盡量以英文呈現 (如 Bounded Context, Subdomain 等等) 。因此會出現大量「晶晶體」也請多見諒。
 
-本系列我主要是參考 [Implementing Domain-Driven Design](https://www.tenlong.com.tw/products/9787121224485) 為主，此書實作內容非常豐富。不過不太建議新手直接拿來啃，最好是搭配本系列一起服用 XD
+本系列我主要是參考 [Implementing Domain-Driven Design](https://www.tenlong.com.tw/products/9787121224485) (簡稱 IDDD) 為主，此書實作內容非常豐富。不過不太建議新手直接拿來啃，最好是搭配本系列一起服用 XD
 
 同時偶爾參考元祖書 [Domain-Driven Design](https://www.tenlong.com.tw/products/9789864343874?list_name=c-domain-driven-design) 與另一本好書 [Patterns, Principles, and Practices of Domain-Driven Design](https://www.tenlong.com.tw/products/9781118714706?list_name=srh) 還有一堆網路文章與影片。
 
