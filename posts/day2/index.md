@@ -14,7 +14,7 @@ DDD 主要分為兩大部分，分別為：
 
 以下這張圖完美呈現了整個 DDD 的模式概覽:
 ![img](https://i.imgur.com/UklC1Ek.jpg)
-(source: https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf)
+(source: [Domain-Driven Design Reference](https://domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf))
 
 ### Strategic Design 戰略設計
 
@@ -38,25 +38,26 @@ DDD 主要分為兩大部分，分別為：
 - Entity: 有 id 概念、狀態可持續被變更的物件。
 - Value Object: 無 identity 概念、狀態不可變更的物件 (object)，用於描述某個事物的特徵。
 - Aggregate: 由一堆有相關業務目的的物件 (包含 Entity 與 Value Object) 組成的集合，通常是為了保證邏輯判斷的完整性。會選一個 Entity 作為 Aggregate Root 讓與外界的交流必須經過 Aggregate Root。
-- Domain Model: 以上三個因為負責處理系統的業務邏輯，因此統稱為 domain model。
+- Domain Model: 以上三個因為負責處理程式的業務邏輯，因此統稱為 domain model。
 - Repository: 一種程式與資料庫交流的抽象層，通常一個 Aggregate 會對上一個 Repository。
 - Factory: 用於產生複雜的 Aggregate 、 Entity 、 Value Object 的工廠模式。
 - Domain Event: 某件領域專家在乎的事件，通常用於 Aggregate 間或 Bounded Context 間的溝通。
 - Application Service: 等同於系統的 Use Case ，主要負責技術細節並呼叫 domain model 、 domain service 處理業務邏輯。
 - Domain Service: 負責跨 domain model 的業務邏輯運算，處於 Application Service 與 domain model 之間。
 
-阿說到 roadmap ，趁著心頭一熱就畫了一張：
+如果以上看得霧煞煞，可以看以下這張精美(簡)版：
 ![](https://raw.githubusercontent.com/FongX777/it30-domain-driven-design/master/posts/day2/ddd-roadmap.png)
+(完整放大版點此[連結](https://bit.ly/2lXdZvj))
 
-## 目錄
+## 鐵人賽目錄
 
-戰略部分會依照以下順序展開：
+以上說了那麼多，以下會跟大家介紹本次鐵人賽會涵蓋到的部分。戰略部分會依照以下順序展開：
 
 - Domain & Subdomains & Bounded Context
 - Context Mapping Patterns
 - Event Storming
 
-結束戰略銜接戰術前，我會先介紹一些現代的架構以支援戰術與戰略的融合：
+結束戰略銜接戰術前，我會先介紹一些現代的架構以支援戰術與戰略的融合以做到「關注點分離」：
 
 - Layered Architecture
 - Onion/Clean Architecture
@@ -92,12 +93,13 @@ DDD 主要分為兩大部分，分別為：
 
 ## 資源分享
 
-非免費資源我會在後面標注星號:
+非免費資源我會在後面標注星號：
 
 ### 書籍
 
 - [Domain-Driven Design \*](https://www.tenlong.com.tw/products/9789864343874?list_name=c-domain-driven-design) 俗稱小藍書，看了會有很多收穫但稍嫌抽象。可以買一本供奉著。
 - [Implementing Domain-Driven Design \*](https://www.tenlong.com.tw/products/9787121224485) 小紅書，也是本系列主要參考對象，以 JAVA 實現，雖然年代稍久，但實作面很強的一本書，很建議與本篇一起閱讀。
+- [Domain-Driven Design Distilled \*](https://www.tenlong.com.tw/products/9780134434421) 可以當小紅書前傳來看，很適合傳教或推坑使用。
 - [Patterns, Principles, and Practices of Domain-Driven Design \*](https://www.tenlong.com.tw/products/9781118714706?list_name=srh) 另一本很推薦的書，尤其適合熟悉 C# 的朋友入手。很建議與上面那本搭配閱讀。
 - [DDD Reference](http://domainlanguage.com/ddd/reference/) DDD 專有名詞對照書。
 - [Domain Driven Design Quickly](https://www.infoq.com/minibooks/domain-driven-design-quickly/) 小藍書精簡版。 [簡中版](https://www.infoq.cn/article/domain-driven-design-quickly?fbclid=IwAR1evqEP9h3Kj04tU5N0_oUPydmJmsuNahKUKqwz3TKgL84izTfxY9g39ks)
@@ -127,3 +129,5 @@ DDD 主要分為兩大部分，分別為：
 
 現在就加入 [Domain-Driven Design Taiwan](https://www.facebook.com/groups/dddtaiwan/) ，隨時更新活動與新知！
 最近才剛辦完耗時半年的 Implementing Domain-Driven Design 的讀書會，如果對讀書會有興趣請密切關注！
+
+也可以到 [ddd-tw/ddd-events](https://github.com/ddd-tw/ddd-events) 翻翻過去活動留下來的資源。
