@@ -1,5 +1,7 @@
 # DDD 學習路徑與資源分享
 
+![cover](https://images.unsplash.com/photo-1471958680802-1345a694ba6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1132&q=80)
+
 經過昨天的傳教文章，今天來為各位簡單介紹一些 DDD 學習路線以及這系列文章會涵蓋的範圍。
 最後再附上我覺得非常有幫助的各種資源。
 
@@ -33,8 +35,8 @@ DDD 主要分為兩大部分，分別為：
 
 ![](https://i.imgur.com/4SaZvwd.jpg)
 
-- Entity: 一種隨時間被變更後仍可被識別出的物件 (object) 有 id 概念、狀態可被變更的物件，
-- Value Object: 無 id 概念、狀態不可變更的物件 (object)，用於描述某個事物的特徵。
+- Entity: 有 id 概念、狀態可持續被變更的物件。
+- Value Object: 無 identity 概念、狀態不可變更的物件 (object)，用於描述某個事物的特徵。
 - Aggregate: 由一堆有相關業務目的的物件 (包含 Entity 與 Value Object) 組成的集合，通常是為了保證邏輯判斷的完整性。會選一個 Entity 作為 Aggregate Root 讓與外界的交流必須經過 Aggregate Root。
 - Domain Model: 以上三個因為負責處理系統的業務邏輯，因此統稱為 domain model。
 - Repository: 一種程式與資料庫交流的抽象層，通常一個 Aggregate 會對上一個 Repository。
@@ -43,17 +45,8 @@ DDD 主要分為兩大部分，分別為：
 - Application Service: 等同於系統的 Use Case ，主要負責技術細節並呼叫 domain model 、 domain service 處理業務邏輯。
 - Domain Service: 負責跨 domain model 的業務邏輯運算，處於 Application Service 與 domain model 之間。
 
-## 本系列風格說明
-
-由於 DDD 大部分資源都以英文為主，且中文翻譯又容易有歧異，所以為了希望大家未來能無縫接軌英語資源，在專有名詞使用上，我都盡量以英文呈現 (如 Bounded Context, Subdomain 等等) 。因此會出現大量「晶晶體」也請多見諒。
-
-本系列我主要是參考 [Implementing Domain-Driven Design](https://www.tenlong.com.tw/products/9787121224485) (簡稱 IDDD) 為主，此書實作內容非常豐富。不過不太建議新手直接拿來啃，最好是搭配本系列一起服用 XD
-
-同時偶爾參考元祖書 [Domain-Driven Design](https://www.tenlong.com.tw/products/9789864343874?list_name=c-domain-driven-design) 與另一本好書 [Patterns, Principles, and Practices of Domain-Driven Design](https://www.tenlong.com.tw/products/9781118714706?list_name=srh) 還有一堆網路文章與影片。
-
-在程式語言實作方面，由於我熟悉的語言如 NodeJS 、 Python 等都不是純粹的 OO 語言，所以我就選用 TypeScript 作為開發範例程式碼。如果你是用 JAVA 、 C# 、 PHP 等的朋友們...我只能說恭喜拉！網路上超多程式碼資源(尤其是 C#) ，可以從我這邊理解概念後再上網找範例程式碼。
-
-為了讓大家能快速上手 DDD 的概念，實踐方面我盡量都會寫出範例程式碼，但因為 30 天的極限挑戰下，若有錯誤也請各位不吝指出，我會立即修正，謝謝。
+阿說到 roadmap ，趁著心頭一熱就畫了一張：
+![](https://raw.githubusercontent.com/FongX777/it30-domain-driven-design/master/posts/day2/ddd-roadmap.png)
 
 ## 目錄
 
@@ -85,8 +78,17 @@ DDD 主要分為兩大部分，分別為：
 
 最後有時間的話會找幾個簡單的 project 跟大家一起實作。
 
-阿說到 roadmap ，趁著心頭一熱就畫了一張：
-![](./roadmap.jpeg)
+## 本系列風格說明
+
+由於 DDD 大部分資源都以英文為主，且中文翻譯又容易有歧異，所以為了希望大家未來能無縫接軌英語資源，在專有名詞使用上，我都盡量以英文呈現 (如 Bounded Context, Subdomain 等等) 。因此會出現大量「晶晶體」也請多見諒。
+
+本系列我主要是參考 [Implementing Domain-Driven Design](https://www.tenlong.com.tw/products/9787121224485) (簡稱 IDDD) 為主，此書實作內容非常豐富。不過不太建議新手直接拿來啃，最好是搭配本系列一起服用 XD
+
+同時偶爾參考元祖書 [Domain-Driven Design](https://www.tenlong.com.tw/products/9789864343874?list_name=c-domain-driven-design) 與另一本好書 [Patterns, Principles, and Practices of Domain-Driven Design](https://www.tenlong.com.tw/products/9781118714706?list_name=srh) 還有一堆網路文章與影片。
+
+在程式語言實作方面，由於我熟悉的語言如 NodeJS 、 Python 等都不是純粹的 OO 語言，所以我就選用 TypeScript 作為開發範例程式碼。如果你是用 JAVA 、 C# 、 PHP 等的朋友們...我只能說恭喜拉！網路上超多程式碼資源(尤其是 C#) ，可以從我這邊理解概念後再上網找範例程式碼。
+
+為了讓大家能快速上手 DDD 的概念，實踐方面我盡量都會寫出範例程式碼，但因為 30 天的極限挑戰下，若有錯誤也請各位不吝指出，我會立即修正，謝謝。
 
 ## 資源分享
 
