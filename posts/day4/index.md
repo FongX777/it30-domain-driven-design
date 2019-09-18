@@ -5,6 +5,36 @@ Bounded Context 就像一個國家一樣，在台灣你說。
 
 ## 🔍 如何辨識 Bounded Context
 
+很多時候，如果系統大到需要被拆分出程式碼或是獨立出新系統，我們會依靠 Business Context
+
+### 注重 Business Capabilities 勝過資料
+
+同樣概念的資料，如顧客，可能會在不同業務功能中出現，如果單純用資料的概念去定義，最後一定會長出一個肥大且難用的 Bounded Context 。
+事實上，用業務功能
+
+很多時候，我們會把 Bounded Context
+
+Customer 在不同 bounded context 中有不同的意義
+ex:
+瀏覽產品目錄時，顧客 = 先前購買紀錄、忠誠度、可買商品、折扣...
+下單時的顧客 = 名字、聯絡方式、地址、其他術語
+
+- Language
+  Models act as an Ubiquitous Language, therefore it is necessary to draw a line between Contexts when the project language changes
+  If a Bounded Context must be managed or implemented by more than one team it is probably too big and should be split up.
+
+  - Data Authority
+
+- One Team
+
+- Meaningful Model
+  Try to identify models that make sense and that are meaningful in one specific context. Also think about decoupling of models
+  EX: avoid `utils` model
+- Cohesion
+  Take a look at your (sub-) domain and think about which parts of that domain are strongly related or in other words highly cohesive
+
+最後提醒一下， DDD 是一種設計方法，並非數學考試，沒有正確答案。
+
 > This is design and art, not science.
 
 ### 同一概念拆分在不同 Bounded Context
@@ -44,3 +74,4 @@ Bounded Context 為系統間提供了絕佳的邊界，不管是否之後有沒�
 ## Resources
 
 - [Context is King: Finding Service Boundaries](https://dev.to/codeopinion/context-is-king-finding-service-boundaries-4mob)
+- [Focus on Service Capabilities, not Entities](https://codeopinion.com/focus-on-service-capabilities-not-entities/)

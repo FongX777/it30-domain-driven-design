@@ -6,7 +6,7 @@
 
 簡單來說就是 **(你在工作上用到的)問題 + 解法** 。
 
-本篇就是來介紹介紹 DDD 如何定義這些問題與解法。
+本篇就是來介紹介紹 DDD 如何定義這些問題與解法，包括 domain, subdomain 與 bounded context 。
 
 ## Domain 的一體兩面: Problem Space 與 Solution Space
 
@@ -15,6 +15,10 @@
 ![Pasted image](https://dynalist.io/u/rEGOkcRbG9YnZUBneAGruNAi)
 
 所以你也可以把 Domain-Driven Design 當作 Business Problem Driven Design
+
+不過大家也可發現， domain 一詞負載著太多的含義，對於初期開發者而言，很容易把 domain 視做一個單一的大系統。
+
+理想上，要建立一個能滿足所有需求的全能型系統是非常困難的，而且很容易失敗。所以實務上，會把 domain 拆分出多個 subdomain 。然後依據業務能力拆分出多個 Bounded Context ，在 Bounded Context 裡面開發 model 。
 
 接著介紹一下這兩個空間，可以參考這張圖片作為大綱：
 ![Pasted image](https://dynalist.io/u/nz6c5ZVhSEibMUu093L-ke6D)
