@@ -7,7 +7,7 @@
 
 DDD 主要分為兩大部分，分別為：
 
-- Strategic Design 戰略設計：利用 Use Case 捕捉業務模型拆分出 Subdomain ，並依此建立 Bounded Context 。
+- Strategic Design 戰略設計: 利用與領域專家溝通的結果，拆分問題成數個子領域後，定義解決方案(系統)的邊界與關係。
 - Tactical Design 戰術設計：又稱 Model-Driven Design ，利用 Strategic Design 建立好的邊界與語言，透過一系列的 pattern 化為程式碼，保護業務核心的穩定性。
 
 以下這張圖完美呈現了整個 DDD 的模式概覽:
@@ -16,14 +16,13 @@ DDD 主要分為兩大部分，分別為：
 
 ### Strategic Design 戰略設計
 
-戰略設計目的在於協助我們建立 domain knowledge 並將其拆分成合理的區塊一一處理，同時也使我們理解軟體的核心價值在哪裡。戰略包括：
-
 ![img](https://i.imgur.com/U2h7vYy.jpg)
 
-- 與領域專家互動建立 Domain 與解決方案。
-- 將 Domain 切成若干 Subdomain 並找出 Core Subdomain 。
-- 對應 Subdomain 來為解決方案做分類並建立邊界： Bounded Context (限界上下文，之後會詳談) 。
-- Bounded Context 同時也有語言邊界的功能，所以可以在其中定義 Ubiquitous Language 。
+戰略設計目的在於協助我們建立 domain knowledge 並將其拆分成合理的區塊一一處理，同時也使我們理解軟體的核心價值在哪裡。戰略包括：
+
+- 與領域專家溝通建立 **Ubiquitous Language**。
+- 將 Domain 切成若干 Subdomain 並定義其優先度。
+- 對應 Subdomain 與 Ubiquitous Language 為解決方案建立語意的邊界：Bounded Context (限界上下文，之後會詳談) 。
 - 定義不同 Bouund Context 之間的互動模式 Context Mapping 。
 
 歷史小補充: 在 DDD 剛推出時，因為戰略部分非常抽象，所以很多人只學習可以立即導入程式碼中的戰術設計，因此這種只使用戰術模式的 DDD 實踐方式又稱為 DDDLite 。不過隨著程式碼逐漸增長，大家逐漸意識到沒有做好戰略設計，即使加入再多的戰術程式碼都是脆弱的。因為有了戰略打穩地基，團隊有了充足的領域知識與通用語言做後盾，才能準確設立系統的邊界以符合業務需求。
@@ -34,11 +33,11 @@ DDD 主要分為兩大部分，分別為：
 
 ![](https://i.imgur.com/4SaZvwd.jpg)
 
-- Entity: 有 id 概念、狀態可被變更的物件。
-- Value Object: 無 id 概念、狀態不可變更的物件。
-- Aggregate: 由一堆有相關業務目的的物件 (包含 Entity 與 VO) 組成的集合，會選一個 Entity 作為 Aggregate Root 。
-- Domain Model: 以上三個因為負責處理系統的業務邏輯，因此統稱為 domain model 。
-- Repository: 用於程式與資料庫交流的抽象層，通常一個 Aggregate 會對上一個 Repository 。
+- Entity: 一種隨時間被變更後仍可被識別出的物件 (object) 有 id 概念、狀態可被變更的物件，
+- Value Object: 無 id 概念、狀態不可變更的物件 (object)，用於描述某個事物的特徵。
+- Aggregate: 由一堆有相關業務目的的物件 (包含 Entity 與 Value Object) 組成的集合，通常是為了保證邏輯判斷的完整性。會選一個 Entity 作為 Aggregate Root 讓與外界的交流必須經過 Aggregate Root。
+- Domain Model: 以上三個因為負責處理系統的業務邏輯，因此統稱為 domain model。
+- Repository: 一種程式與資料庫交流的抽象層，通常一個 Aggregate 會對上一個 Repository。
 - Factory: 用於產生複雜的 Aggregate 、 Entity 、 Value Object 的工廠模式。
 - Domain Event: 某件領域專家在乎的事件，通常用於 Aggregate 間或 Bounded Context 間的溝通。
 - Application Service: 等同於系統的 Use Case ，主要負責技術細節並呼叫 domain model 、 domain service 處理業務邏輯。
@@ -60,7 +59,7 @@ DDD 主要分為兩大部分，分別為：
 
 戰略部分會依照以下順序展開：
 
-- Subdomains & Bounded Context
+- Domain & Subdomains & Bounded Context
 - Context Mapping Patterns
 - Event Storming
 
@@ -70,7 +69,6 @@ DDD 主要分為兩大部分，分別為：
 - Onion/Clean Architecture
 - Port-Adapter Architecture
 - Communication with other Bounded Contect
-- BDD with use cases
 
 接著再進入大家期待的程式實作戰術設計：
 
@@ -78,7 +76,7 @@ DDD 主要分為兩大部分，分別為：
 - Value Object
 - Aggregate
 - Factory
-- Application Service
+- Application Service (w/ BDD integration)
 - Repository
 - Module
 - Domain Service
@@ -87,9 +85,12 @@ DDD 主要分為兩大部分，分別為：
 
 最後有時間的話會找幾個簡單的 project 跟大家一起實作。
 
+阿說到 roadmap ，趁著心頭一熱就畫了一張：
+![](./roadmap.jpeg)
+
 ## 資源分享
 
-非免費資源我會在後面標注星號
+非免費資源我會在後面標注星號:
 
 ### 書籍
 
@@ -97,8 +98,8 @@ DDD 主要分為兩大部分，分別為：
 - [Implementing Domain-Driven Design \*](https://www.tenlong.com.tw/products/9787121224485) 小紅書，也是本系列主要參考對象，以 JAVA 實現，雖然年代稍久，但實作面很強的一本書，很建議與本篇一起閱讀。
 - [Patterns, Principles, and Practices of Domain-Driven Design \*](https://www.tenlong.com.tw/products/9781118714706?list_name=srh) 另一本很推薦的書，尤其適合熟悉 C# 的朋友入手。很建議與上面那本搭配閱讀。
 - [DDD Reference](http://domainlanguage.com/ddd/reference/) DDD 專有名詞對照書。
-- [Domain Driven Design Quickly](https://www.infoq.com/minibooks/domain-driven-design-quickly/) [簡中版](https://www.infoq.cn/article/domain-driven-design-quickly?fbclid=IwAR1evqEP9h3Kj04tU5N0_oUPydmJmsuNahKUKqwz3TKgL84izTfxY9g39ks)
-- [GETTING STARTED WITH DDD WHEN SURROUNDED BY LEGACY SYSTEMS](http://domainlanguage.com/wp-content/uploads/2016/04/GettingStartedWithDDDWhenSurroundedByLegacySystemsV1.pdf)
+- [Domain Driven Design Quickly](https://www.infoq.com/minibooks/domain-driven-design-quickly/) 小藍書精簡版。 [簡中版](https://www.infoq.cn/article/domain-driven-design-quickly?fbclid=IwAR1evqEP9h3Kj04tU5N0_oUPydmJmsuNahKUKqwz3TKgL84izTfxY9g39ks)
+- [GETTING STARTED WITH DDD WHEN SURROUNDED BY LEGACY SYSTEMS](http://domainlanguage.com/wp-content/uploads/2016/04/GettingStartedWithDDDWhenSurroundedByLegacySystemsV1.pdf) 可參考與 DDD 如何應用進 Legacy System。
 - [Domain-Driven Design: The First 15 Years](https://leanpub.com/ddd_first_15_years) DDD 歐洲社群精選幾篇文章後出版了此書，適合有一定經驗的讀者閱讀。
 
 ### 文章
