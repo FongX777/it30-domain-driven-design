@@ -1,14 +1,14 @@
 # DDD 系列文章簡介與資源分享
 
-經過昨天的傳教文章，今天來為各位簡單介紹一些 DDD 學習路線以及這系列文章會涵蓋的範圍。
-最後再附上我覺得非常有幫助的各種資源。
+經過昨天的傳教文章，今天來為各位簡單介紹 DDD 學習路線以及這系列文章會涵蓋的範圍。
+並在文末附上我評估對 DDD 感興趣的朋友有幫助的學習資源。
 
 ## 🗺 Learning Roadmap
 
 DDD 主要分為兩大部分，分別為：
 
-- Strategic Design 戰略設計：利用 Use Case 捕捉業務模型拆分出 Subdomain ，並依此建立 Bounded Context 。
-- Tactical Design 戰術設計：又稱 Model-Driven Design ，利用 Strategic Design 建立好的邊界與語言，透過一系列的 pattern 化為程式碼，保護業務核心的穩定性。
+- 戰略設計 (Strategic Design) ：利用 Use Case 捕捉業務模型拆分出 Subdomain ，並依此建立 Bounded Context 。
+- 戰術設計 (Tactical Design) ：又稱 Model-Driven Design。利用 Strategic Design 建立好的邊界與語言，透過一系列的 pattern 化為程式碼，保護業務核心的穩定性。
 
 以下這張圖完美呈現了整個 DDD 的模式概覽:
 ![img](./roadmap.jpeg)

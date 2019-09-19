@@ -3,7 +3,7 @@
 Bounded Context 就像一個國家一樣，在台灣你說。
 更直接一點，「爸爸」一詞只有在自己家 (context) 才成立。
 
-## 🔍 如何辨識 Bounded Context
+## 如何辨識 Bounded Context
 
 很多時候，如果系統大到需要被拆分出程式碼或是獨立出新系統，我們會依靠 Business Context
 
@@ -75,3 +75,4 @@ Bounded Context 為系統間提供了絕佳的邊界，不管是否之後有沒�
 
 - [Context is King: Finding Service Boundaries](https://dev.to/codeopinion/context-is-king-finding-service-boundaries-4mob)
 - [Focus on Service Capabilities, not Entities](https://codeopinion.com/focus-on-service-capabilities-not-entities/)
+- [Modelling Bounded Contexts with the Bounded Context Design Canvas: A Workshop Recipe](https://medium.com/nick-tune-tech-strategy-blog/modelling-bounded-contexts-with-the-bounded-context-design-canvas-a-workshop-recipe-1f123e592ab)
