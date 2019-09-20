@@ -16,20 +16,22 @@
 
 ![map](https://i.imgur.com/cvDBjwo.png)
 
-不過當業務邏輯複雜度提升，在缺乏溝通與 Ubiquitous Language 的幫助下，商業團隊與開發團隊漸漸變成各說各話。如此一來，一旦商業團隊沒有表達出完整的知識內容或是缺乏從系統角度去思考 (ex: 考慮邊界條件)的話，往往就會在產品驗收時才發現許多當初沒想到的問題。
+不過當業務邏輯複雜度提升，在缺乏溝通的情況下，商業團隊與開發團隊漸漸變得各說各話。一旦商業團隊沒有表達出完整的領域知識或是缺乏從系統角度去思考 (ex: 考慮邊界條件) 的話，很多當初沒注意到的問題往往就會在產品驗收時才爆發出來。
 
-而面對突然跑出來的需求，工程師也只能利用現有架構東貼西補，甚至得加班解燃眉之急。
-
-DDD 的做法與上述的方式不同，將 Problem Space (問題空間) 與 Solution Space (解決方案空間) 皆視作 Domain 的一部份，兩者都是商業團隊與開發團隊需要共同理解的。因此 DDD 要求開發人員對於整體商業功能的藍圖也要有基本的了解，才有助於在未來將業務知識帶入到程式碼中。
-
-定義完 Domain 後，可以發現 Domain 一詞負載著太多含義。畢竟一個產品有許多面向，需要解決的問題也不只一種。直覺上，有些人覺得 Domain 會由一個全能的 Domain Model 完成所有的功能。但事實上這非常的困難且容易失敗。
-
-為了要有效分析並實作出產品，除了將 Domain 分為 Problem Space 與 Solution Space 外，還會再進一步將兩者做拆解。 Problem Space (大問題) 會拆分出數個 Subdomain (小問題) ，其中 (通常) 一個是 Core domain；Solution Space 則是參考 Subdomain 以及產品功能建立 Bounded Context 以確立系統邊界，而我們的 Domain Model 這時才會在 Bounded Context 裡面進行開發。
-
-可以參考下圖，當商業需求與系統實作脫鉤時，可以明顯看到兩者的不匹配，且難以應對未來需求的變化 (比如 CEO 說 `Business D` 外包吧)。
+而面對突然跑出來的需求，工程師也只能利用現有架構東貼西補，甚至得加班解燃眉之急。當商業需求與系統實作脫鉤時，系統就會難以應對未來需求的變化 (比如 CEO 說 `Business D` 外包吧)。參照下圖可以發現，兩著之間的不匹配。
 
 ![](https://i.imgur.com/a6BDDUS.png)
-(當商業需求與系統實作脫鉤、各做各的)
+(當商業需求與系統實作脫鉤)
+
+DDD 的做法與上述的方式不同，將 **Problem Space (問題空間) 與 Solution Space (解決方案空間) 皆視作 Domain 的一部份**，兩者都是商業團隊與開發團隊需要共同理解的。因此開發人員對於商業整體的藍圖也要有基本的了解，才有助於將業務知識注入進程式碼中。
+
+### 將 Domain 分而破之
+
+定義完 Domain 後，可以發現 Domain 一詞負載著太多含義。畢竟一個產品有許多面向，需要解決的問題也不只一種。
+
+直覺上，有些人覺得需要由一個全能的 Domain Model 完成 Domain 的所有功能，但事實上這非常的困難且容易失敗。
+
+為了要有效分析並實作出產品，除了將 Domain 分為 Problem Space 與 Solution Space 外，還會再進一步將兩者做拆解。 Problem Space (大問題) 會拆分出數個 Subdomain (小問題) ，其中一個是 Core domain；Solution Space 則是參考 Subdomain 以及產品功能建立 Bounded Context 以確立系統邊界，而我們的 Domain Model 這時才會在 Bounded Context 裡面進行開發。
 
 而當我們實作 Strategic Design 後，可以看到需求與實作緊密結合。如此一來，實作面就能緊緊跟隨商業世界的變化，提升競爭力。可以參考下圖呈現 Strategic Design 成果的分析圖：
 
@@ -49,7 +51,7 @@ DDD 的做法與上述的方式不同，將 Problem Space (問題空間) 與 Sol
 Problem Space 的拆分是基於產品/專案的商業目標，這需要團隊與領域專家討論後才能夠決定。而拆分出的 Subdomain 可以依照優先等級、功能性與替代性分成三個類型:
 
 - Core Domain 核心域
-  - 整個產品最有價值 (最賺錢) 的部分，也是其核心競爭力。
+  - 整個產品**最有價值 (最賺錢)** 的部分，也是其核心競爭力。
   - 需要花費最大心力開發。
   - 如果 Core Domain 不是你最重要的部分，那代表你要回去再找找。
   - EX: AI 推薦購買商品需求
@@ -80,11 +82,11 @@ Solution Space 是你**實作程式模型**的地方，為了要更好的劃分�
 
 你可以把 Bounded Context 想像成國家的邊界一樣，你不能把不同國家的概念偷渡進來 (就像豬肉一樣)，不然溝通就會發生障礙。如同「元首」一詞，在美國這個 Context 就是總統，在日本的 Context 是總理大臣，在德國則是總理。
 
-Solution Space 中包含**一個或多個 Bounded Context**，每個 Bounded Context 都可以視作一個特定的解決方案。
+Solution Space 中包含一個或多個 Bounded Context，每個 Bounded Context 都可以視作一個特定的解決方案。
 
 至於為什麼需要這個邊界呢？
 
-在系統開發中常會見到開發團隊直接設計一個大系統，然後依照商業需求逐個將程式模型塞進這個大系統中。依本文前面所描述的，一個產品的需求有多種面向，即使是同一個名詞在不同的語境 (Context) 底下都會有不同的定義。
+在系統開發中常會見到開發團隊直接設計一個大系統，然後依照商業需求逐個將程式模型塞進這個大系統中。依本文前面所描述的，一個產品的需求有多種面向，即使是**同一個名詞在不同的語境 (Context) 底下都會有不同的定義**。
 
 舉下圖為例，一個 Account 在銀行中是金錢帳戶、在社交軟體中是關於好友關係管理、在部落格系統則是文章資料管理。若是因為 Account 是同個名詞或是都存在同一個 table 中就通通應用上去，你就會得到一個巨大卻又雜亂的 Account。
 
@@ -163,3 +165,5 @@ _註：Domain Model 泛指那些用來解決 Domain 問題的解決方案。可�
 
 - [Revisiting the Basics of Domain-Driven Design](https://vladikk.com/2018/01/26/revisiting-the-basics-of-ddd/)
 - [2019-03-13-ddd taiwan-community-iddd-studygroup-2nd](https://www.slideshare.net/FongXuanLiou/20190313ddd-taiwancommunityidddstudygroup2nd)
+- [Wrong Ways of Defining Service Boundaries
+  June 22nd 2017](https://hackernoon.com/wrong-ways-of-defining-service-boundaries-d9e313007bcc)
