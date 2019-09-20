@@ -1,7 +1,6 @@
 # 戰略設計：Bounded Context 深度解析
 
 ![](https://images.unsplash.com/photo-1483286603667-e00f31da5e77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1191&q=80)
-_(source: https://unsplash.com/photos/D6uxeDSylxo)_
 
 前面提到，我們會運用 Bounded Context 讓處在其中的 Domain Model 可以使用 Ubiquitous Language 來編寫程式模型，讓這些模型的屬性與行為在 Context 內得到完整的含義。
 
@@ -145,7 +144,7 @@ By Conwey Law: 軟體組織的團隊邊界決定系統邊界 => Bounded Context 
 
 Bounded Context 的天然邊界就是完美的系統邊界，非常適合作為 Microservice 的劃分。
 
-可以參考 Kim 哥的經典演講：[2019 03-23-2nd-meetup-essential capabilities behind microservices](https://www.slideshare.net/kimKao/2019-03232ndmeetupessential-capabilities-behind-microservices-137920646)
+可以參考 Kim 哥的經典演講：[2019 03-23-2nd-meetup-essential capabilities behind microservices](https://www.slideshare.net/kimKao/2019-0612aws-taipei-summitdeve-day2essential-capabilities-behind-microservices)
 
 不過這邊需要釐清一點，**Bounded Context 可以是 Microservice ，Microservice 不完全是 Bounded Context**。
 前面提到，Bounded Context 是一個商業功能的邊界，而 Microservice 目的則是將程式功能抽出來。所以一個 Bounded Context 可以做成一個 Microservice，但也有可能從又分出多個 Microservice 。
@@ -234,7 +233,11 @@ Bounded Context 的威力很大，但有時候投入的成本不一定匹配獲�
 
 ## Resources
 
+- [cover photo](https://unsplash.com/photos/D6uxeDSylxo)
 - [Context is King: Finding Service Boundaries](https://dev.to/codeopinion/context-is-king-finding-service-boundaries-4mob)
+- [Context is King: Finding Service Boundaries through Language](https://codeopinion.com/context-is-king-finding-service-boundaries-through-language/)
+- [4+1 Architectural View Model](https://codeopinion.com/41-architectural-view-model/)
 - [Focus on Service Capabilities, not Entities](https://codeopinion.com/focus-on-service-capabilities-not-entities/)
+- [Autonomous Services](https://codeopinion.com/autonomous-services/)
 - [Modelling Bounded Contexts with the Bounded Context Design Canvas: A Workshop Recipe](https://medium.com/nick-tune-tech-strategy-blog/modelling-bounded-contexts-with-the-bounded-context-design-canvas-a-workshop-recipe-1f123e592ab)
 - [Who owns the Orders in a consumer-provider marketplace like platform?](https://softwareengineering.stackexchange.com/questions/366214/who-owns-the-orders-in-a-consumer-provider-marketplace-like-platform)
