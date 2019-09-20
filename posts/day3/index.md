@@ -1,4 +1,4 @@
-# 用 Domain, Subdomain 與 Bounded Context 鳥瞰系統
+# 戰略設計：運用 Domain, Subdomain 與 Bounded Context 打造藍圖
 
 ![cover](https://images.unsplash.com/photo-1470506926202-05d3fca84c9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)
 
@@ -25,8 +25,9 @@ DDD 的做法相反於傳統的觀念，將 Problem Space (問題空間) 與 Sol
 
 為了要有效分析並實作出產品，除了將 Domain 分為 Problem Space 與 Solution Space 外，還會再進一步將兩者做拆解。 Problem Space 會拆分出數個 Subdomain 以及(通常)一個 Core domain；Solution Space 則是參考 Subdomain 以及產品功能建立 Bounded Context，而我們的 Domain Model 就會在 Bounded Context 裡面進行開發。
 
-接著介紹一下這兩個空間，可以參考這張圖片作為大綱：
-![Pasted image](https://dynalist.io/u/nz6c5ZVhSEibMUu093L-ke6D)
+接著介紹一下這兩個空間，大家可以先看一下最後的分析結果大概會長這樣：
+
+![](https://i.imgur.com/2FPYcds.png)
 
 ### 先畫靶再射箭：Problem Space
 
@@ -46,16 +47,16 @@ Problem Space 的拆分沒有一定的準則，主要是與領域專家討論後
   - 通常市場上可能沒有現成方案
   - EX: 購物需求
 - Generic Subdomain 通用子領域
-  - 未提供核心競爭力，但被整個系統都可能會用到它 (類似 Infrastructure)
+  - 未提供核心競爭力，但被整個系統都可能會用到它
   - 也可能被 Supporting Subdomain 使用
-  - 通常會**使用現成工具或外包** (別重造輪子)
+  - 市場上已經有很好的解決方案，所以通常會**使用現成工具或外包** (別重造輪子)
   - EX: 身份認證需求、金流串接
 
-三者的差別可以用做刀子當比喻。今天一家生產刀子的工廠，他的核心價值當然是刀鋒利不利，因此刀鋒部分是它的 Core Domain，接著有刀鋒也需要有刀背支撐著主要功能，因此可以將刀背視為 Supporting Subdomain。最後的 Generic Subdomain 就有點類似基礎設施，支援著以上兩者的功能。
+三者的差別可以用做刀子當比喻。今天一家生產刀子的工廠，他的核心價值當然是刀鋒利不利，因此刀鋒部分是它的 Core Domain，接著有刀鋒也需要有刀背支撐著主要功能，因此可以將刀背視為 Supporting Subdomain。最後的 Generic Subdomain 就有點類似基礎設施，支援著以上兩者的功能，通常可以找外包解決。
 
 需注意的是，雖然 Core Domain 是軟體的重心，但不代表其他的都不重要，**每個 Subdomain 都缺一不可**。只是我們傾向放更多時間資源 (如 Clean Architecture 、測試覆蓋率) 在 Core Domain 上。
 
-![knife](https://i.imgur.com/4T7BWTI.png)
+![knife](https://i.imgur.com/i4ZqD4d.png)
 
 P.S. Core Domain 也算是 Subdomain 的一種，不過因為原文就是如此稱呼，我也不另稱 Core Subdomain。
 P.S. 即使某項需求落在你的 Generic Subdomain 中，但有可能是別家公司的 Core Subdomain。
@@ -70,7 +71,7 @@ Solution Space 包含一個或多個 Bounded Context (上下文邊界)。每個 
 
 舉下圖為例，一個 Account 在銀行中是帳戶、在社交軟體中是關於好友關係管理、在部落格系統則是文章資料管理。若是因為 Account 是同個名詞或是都存在同一個 table 中就通通應用上去，你就會得到一個強大卻又雜亂的 Account 。
 
-![](https://i.imgur.com/87Xy1mN.png)
+![](https://i.imgur.com/Ehl14fC.png)
 
 因此 Bounded Context 有一個很重要的原則就是**以語意做邊界**。 Bounded Context 的功能在於讓身在其中的詞彙只有身在 Bounded Context 才能得到完整的含義。因此每個 Bounded Context 都有自己的一套 Ubiquitous Language 在其中。
 
@@ -142,3 +143,4 @@ PS Domain Model 泛指那些用來解決 Domain 問題的解決方案，可以�
 ## Resources
 
 - [Revisiting the Basics of Domain-Driven Design](https://vladikk.com/2018/01/26/revisiting-the-basics-of-ddd/)
+- [2019-03-13-ddd taiwan-community-iddd-studygroup-2nd](https://www.slideshare.net/FongXuanLiou/20190313ddd-taiwancommunityidddstudygroup2nd)
