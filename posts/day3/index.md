@@ -35,7 +35,7 @@ DDD 的做法與上述的方式不同，將 **Problem Space (問題空間) 與 S
 
 而當我們實作 Strategic Design 後，可以看到需求與實作緊密結合。如此一來，實作面就能緊緊跟隨商業世界的變化，提升競爭力。可以參考下圖呈現 Strategic Design 成果的分析圖：
 
-![](https://i.imgur.com/2FPYcds.png)
+![](https://i.imgur.com/bMX4CLY.png)
 (做好 Strategic Design 可以讓需求與實作緊密結合)
 
 接著介紹一下這兩個空間。

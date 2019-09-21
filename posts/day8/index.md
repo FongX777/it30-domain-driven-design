@@ -1,6 +1,4 @@
-# Architecture
-
-## ⭐️ 主要模式
+# Event Stormgng Part 2 - 整合與歸納
 
 ## 📇 範例
 
@@ -8,8 +6,11 @@
 
 ## 📝Summary
 
+Bounded Context Canvas
+
 ## 📚Resources
 
-- https://medium.com/@domagojk/patterns-for-designing-flexible-architecture-in-node-js-cqrs-es-onion-7eb10bbefe17
-- https://blog.ndepend.com/hexagonal-architecture/
-- https://github.com/qas/examples-nodejs-cqrs-es-swagger/blob/master/src/users/services/users.service.ts
+- [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
+  Strategic Domain Driven Design with Context Mapping
+- [https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
+- [https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps](https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps)

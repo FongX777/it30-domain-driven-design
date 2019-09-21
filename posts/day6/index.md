@@ -1,43 +1,17 @@
-# Event Stormgng Part 1 - 事件搜集
+# Strategic Design Recap
 
-## Events 事件
+## 電影院比喻
 
-## Event Triggers
+## Bounded Context 與 Subdomain 差別。
 
-### Actor & Command
+From PPPoDDD:
 
-### External System
+Subdomains, introduced in Chapter 3, “Focusing on the Core Domain,” represent the logical areas of a problem domain, typically reflecting the business capabilities of the business organizational structure. They are used to distinguish the areas of importance in an application, the core domain, from the less important areas, the supporting and generic domains. Subdomains exist to distill the problem space and break down complexity.
 
-### Policy
+Domain models are built to fulfill the uses cases of each of the subdomains. Ideally there would be a one‐to‐one mapping between models and subdomains, but this is not always the case. Models are defined based on team structure, ambiguity in language, business process alignment, or physical deployment. Therefore a subdomain could contain more than a single model and a model could span more than a single subdomain. This is often the case within legacy environments.
 
-## Advanced Tools
+Models need to be isolated and defined within an explicit context in order to stay pure and focused. As you’ve learned, this context is known as the bounded context. **Unlike a subdomain, a bounded context is a concrete technical implementation that enforces boundaries between models within an application.** Bounded contexts exist in the solution space and are represented as explicit domain models in a context.
 
-### Read Model
+## 解答
 
-### UI
-
-## Tips
-
-- 計時器，為每個 session 設定一定時間避免議題發散收不回來。
-- 名詞清單 Glossry
-- 站著最有效率
-- 最好有一位專職 Facilitator ，不能與 domain expert 重複
-- 中間安排休息時間，吃吃零食喝喝水
-- **目的是為了讓工程師理解而非幫助 domain expert 探索產品功能**
-- 人數不必多，三至五個即可
-- 若一個問題卡關太久，可能是 spec 本身就不清楚，此時可以先記錄下來，待之後 de 開會去討論
-
-### Facilitator 職責
-
-### Domain expert 職責
-
-需要事前
-
-## 📝Summary
-
-## 📚Resources
-
-- [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
-  Strategic Domain Driven Design with Context Mapping
-- [https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
-- [https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps](https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps)
+## Resources

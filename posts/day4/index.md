@@ -144,7 +144,7 @@ By Conwey Law: 軟體組織的團隊邊界決定系統邊界 => Bounded Context 
 
 Bounded Context 的天然邊界就是完美的系統邊界，非常適合作為 Microservice 的劃分。
 
-可以參考 Kim 哥的經典演講：[2019 03-23-2nd-meetup-essential capabilities behind microservices](https://www.slideshare.net/kimKao/2019-0612aws-taipei-summitdeve-day2essential-capabilities-behind-microservices)
+可以參考 Kim 哥的經典演講：[2019 06-12-aws taipei summit-dev day-essential capabilities behind microservices](https://www.slideshare.net/kimKao/2019-0612aws-taipei-summitdeve-day2essential-capabilities-behind-microservices)
 
 不過這邊需要釐清一點，**Bounded Context 可以是 Microservice ，Microservice 不完全是 Bounded Context**。
 前面提到，Bounded Context 是一個商業功能的邊界，而 Microservice 目的則是將程式功能抽出來。所以一個 Bounded Context 可以做成一個 Microservice，但也有可能從又分出多個 Microservice 。
@@ -178,42 +178,19 @@ Bounded Context 的天然邊界就是完美的系統邊界，非常適合作為 
 e-commerce
 ├── catalog
 │   ├── applicationService
-│   │   ├── AddProduct.ts
-│   │   ├── DeleteProduct.ts
-│   │   └── UpdateProduct.ts
 │   ├── domain
-│   │   ├── event
-│   │   │   ├── ProductCreated.ts
-│   │   │   └── ProductUpdated.ts
-│   │   └── model
-│   │       ├── Product.ts
-│   │       └── Viewer.ts
 │   └── infrastructure
 ├── identity
 │   ├── applicationService
-│   │   ├── MemberLogin.ts
-│   │   ├── MemberLogout.ts
-│   │   ├── MememberUpdate.ts
-│   │   ├── RegisterMember.ts
-│   │   └── UpdateContract.ts
 │   ├── domain
-│   │   ├── event
-│   │   │   └── ContractUpdated.ts
-│   │   └── model
-│   │       ├── Admin.ts
-│   │       └── Member.ts
 │   └── infrastructure
 └── purchase
     ├── applicationService
-    │   └── PlaceOrder.ts
     ├── domain
-    │   ├── event
-    │   │   ├── OrderClosed.ts
-    │   │   └── OrderPaid.ts
-    │   └── model
-    │       └── Order.ts
     └── infrastructure
 ```
+
+(以上是概略，想看詳細的請進來 [gist](https://gist.github.com/FongX777/9dbb5dce090092604d032fbaf05e7173#file-ddd-project-structure))
 
 ## 📝 Summary
 
