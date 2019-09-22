@@ -1,4 +1,4 @@
-# 戰略設計：重點回顧以及案例說明
+# 戰略設計：重點回顧以及比喻
 
 ![](https://images.unsplash.com/photo-1478720568477-152d9b164e26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
@@ -6,14 +6,27 @@
 
 本篇涵蓋：
 
+- 重點回顧 with 10 個問題
 - 用電影院做比喻
-- 電子商務案例
 
 ## 重點回顧
 
 回顧前，你可以先拿出紙筆、打開編輯器或是面對你家的貓，開始回答以下十題。
 
 讀者們可以先看完問題後先自己思考，再往下看我的答案。
+
+1. 請說明 Domain 是什麼？
+2. 請說明 Ubiquitous Language 的定義與好處以及如何產出？
+3. 請問 Problem Space 與 Solution Space 是什麼？
+4. 請說明 Core Domain、Supporting Subdomain、Generic Subdomain 的定義與差異。
+5. 承上題，請為你目前的工作領域來繪製簡單的 Problem Space。並找出其中的 Core Domain。
+6. 請說明 Bounded Context 的意義以及對於程式碼的影響。以及如何找出來？
+7. 請說明 Subdomain 與 Bounded Context 間的差別。
+8. 請說出 Context Mapping 的所有模式以及大致的功能。
+9. 承 5. 把 Bounded Context 以及 Context Mapping 也一併畫出來
+10. 請說出你心中的其他疑問，然後在下方留言，我會找時間一一回覆。
+
+---
 
 > 1. 請說明 Domain 是什麼？
 
@@ -43,13 +56,22 @@ Generic Subdomain 同樣也不是最有價值的部分，且通常市場上已�
 
 動手試試看，或是參考下面的電影院比喻。
 
-> 6. 請說明 Subdomain 與 Bounded Context 間的差別。
-
-> 7. 請說明 Bounded Context 的意義以及對於程式碼的影響。以及如何找出來？
+> 6. 請說明 Bounded Context 的意義以及對於程式碼的影響。以及如何找出來？
 
 Bounded Context 為解決方案的 Domain Models 建立了一個語意的邊界，讓在其中的 Domain Models 在資料與行為上都能符合 Ubiquitous Language 以及業務需求。
 
 對於找出 Bounded Context，主要以**語意**與**業務能力**來重點。可以從找出那些使用相近概念的名詞與在不同情境下的會有歧異的名詞下手，同時也可以藉由分析系統功能的步驟來解析出 Bounded Context。
+
+> 7. 請說明 Subdomain 與 Bounded Context 間的差別。
+
+Subdomain 你將商業需求拆解與分類的結果；而 Bounded Context 代表你實際解決問題的系統拆解與分類。
+
+有時候這兩者緊緊相關很容易搞混，**但他們的確是不同的東西**。可以參考 DDD 之父 Eric Evans 在這篇 [youtube video](https://www.youtube.com/watch?v=Wbsh1Qw2-Ss&feature=youtu.be) 的簡短回答。裡面提到：
+
+> 這就像地板與地毯的關係。地板是 Subdomain， Bounded Context 是地毯。當你剛裝修好新家就像剛啟動專案時，地毯設計與地板完全匹配，所以你很難發覺他們的差異。**但兩者的確是不同的東西**。
+> 但有一天你換了一個新地毯，它可能無法百分百與地板匹配，會露出一些地板的原貌，甚至會被一些傢俱 (Legacy System) 給擋住，讓兩者更難貼合，此時兩著的差異才會漸漸浮現。
+
+聽完實作還是不會怎麼辦？沒關係。簡單來說如果你在實作時遇到困難時，**就不用分那麼細了**，找到一個你和開發團隊都舒服的方式即可。
 
 > 8. 請說出 Context Mapping 的所有模式以及大致的功能。
 
@@ -91,7 +113,7 @@ Bounded Context 為解決方案的 Domain Models 建立了一個語意的邊界�
 ![https://ithelp.ithome.com.tw/upload/images/20190922/20111997jsryhibfwu.png](https://ithelp.ithome.com.tw/upload/images/20190922/20111997jsryhibfwu.png)
 (找出 Subdomains)
 
-接著，我們從上述的需求訪談裡面列出了幾項關鍵使用案例：
+再經過更深度的使用案例訪談後，我們從上述的需求訪談裡面列出了幾項關鍵使用案例：
 
 - 售票亭可以售票給客人，客人可以選擇電影、時刻、座位以及是否添加套餐。
 - 售票亭員工售票前，要檢查客人的身分證以符合電影分級。
@@ -132,4 +154,4 @@ Bounded Context 為解決方案的 Domain Models 建立了一個語意的邊界�
 
 > Domain Model 則是被建立來滿足各個 Subdomain 的使用案例。理想上 Model 與 Subdomain 間會有一比一的對應關係，但是很難實現。Model 會受到組織架構、語言的模糊性、商業流程或是開發模式的影響。因此一個 Subdomain 可能會包含一個至多個 Model ，而一個 Model 也有可能跨越多個 Subdomain。這種事情很常見於 Legacy System 的環境中。
 
-> Models 需要被隔離並在一個明確的(explicit)邊界內被定義，如此才能讓 Model 不受污染且專注。就像前面所說，這就是我們的 Bounded Context。不像是 Subdomain，一個 Bounded Context 是一個能保證 Model 間邊界的具體的技術實作。 Bounded Context 存在於 Subdomain 中並在其中明確的表達 Domain Models 的含義。
+> Models 需要被隔離並在一個明確的(explicit)邊界內被定義，如此才能讓 Model 不受污染且專注。就像前面所說，這就是我們的 Bounded Context。**不像是 Subdomain，一個 Bounded Context 是一個能保證 Model 間邊界的具體的技術實作。 Bounded Context 存在於 Subdomain 中並在其中明確的表達 Domain Models 的含義。**
