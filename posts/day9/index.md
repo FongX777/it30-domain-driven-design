@@ -1,4 +1,4 @@
-# Event Stormgng Part 2 - 整合與歸納
+# 事件風暴輕鬆學 Part 3 - 程式與實作
 
 ## 📇 範例
 

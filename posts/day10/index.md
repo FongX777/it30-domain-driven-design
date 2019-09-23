@@ -1,4 +1,4 @@
-# Event Stormgng Part 3 - 可以做得更好
+# 事件風暴輕鬆學 Part 4 - 可以做的更好
 
 - Keep the key / legend in view for groups new to Event Storming. You’ll lose your voice trying to explain each part repeatedly!
 - Open with a simple, relatable example. This is especially important for those who do not speak English natively. I tend to use something people are familiar with, such as an online shop.

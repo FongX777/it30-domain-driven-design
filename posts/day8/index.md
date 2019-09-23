@@ -1,4 +1,4 @@
-# 事件風暴 Part 1 - 事件搜集
+# 事件風暴輕鬆學 Part 2 - 風暴展開
 
 ![cover](https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
