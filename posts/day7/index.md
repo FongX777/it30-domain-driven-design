@@ -1,5 +1,7 @@
 # 事件風暴 Part 1 - 事件搜集
 
+![cover](https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
+
 在進行 Strategic Design 時，最重要的就是與領域專家的溝通與合作。說起來簡單，但事實上人際關係的合作可能比寫程式還要複雜。另外，越複雜的產品的領域知識是跨團隊的，沒有任何單一團隊可以掌握他的全貌。
 
 ![](./cross-boundary.png)
@@ -14,11 +16,12 @@
 今天的我會涵蓋以下內容：
 
 - Event Storming Overview
-- 事前準備
+- Round 1: 展開風暴
 - 從 Event 開始
 - Event Triggers 介紹
-- 進階工具
 - 一些小建議
+
+另外，在這邊我會使用中英夾雜的方式，如果我是指「某個便利貼」我會用英文如 Event、Command 來敘述，如果只是單純敘述事情我會用中文如事件來描述。
 
 ## Event Storming Overview
 
@@ -31,7 +34,7 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 - 可以找出流程中的風險與機會。
 - 可以開始進行 Strategic Design 的領域知識
 
-整個過程中會用便利貼來視覺化流程，不會有艱深的技術詞彙或商業報表，只會有團隊學習與有意義的對話。實際跑起來會像是這樣：
+整個過程中會用便利貼來視覺化流程，不會有艱深的技術詞彙或商業報表，只會有團隊學習與多元觀點的對話。實際跑起來會像是這樣：
 
 ![](https://i.imgur.com/Diaa1Mr.gif)
 
@@ -50,14 +53,26 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 
 使用的時機點從巨觀到微觀：
 
-- 想要理解商業流程的全貌 (Big Picture)
+- 想要理解商業流程的全貌 (Big Picture) - 釐清混亂
+  - 邀請任何有興趣的人
+  - 不用限制討論範圍
+  - 找出瓶頸風險與核心價值(問題)
   - 利用圖像理解大方向
-  - 點出流程不清楚的地方
-  - 找出風險與價值
-- 討論新功能使用流程與設計。
+  - 可以只用 Event
+  - 適合新創或小團隊(人少、技術債少)
+  we’ll build a behavioral model of an entire line of business, highlighting collaborations, boundaries, responsibilities and the different perspec- tives of the involved actors and stakeholders;
+• we’ll discover and validate the most compelling problem to solve;
+• we’ll highlight the significant risks involved with the status quo and
+possible new solutions.
+- 為流程建立模型 -> Make sure we're doing the right thing
+  - 有明確範圍
   - 討論詳細流程。
   - 找出邊界問題。
-- 進行程式設計時要建立軟體模型。
+- 進行程式設計時要建立軟體模型 (Software Design)
+  - Corporate bullshit does not compile (企業的流程不會自己編譯自己)
+  - 有明確範圍
+  - 找出 Aggregate、Bounded Context、Ubiquitous Language
+  - 對於用詞更加精準
 
 此外， Event Storming 也可以作為員工訓練，讓新進員工快速上手領域知識。
 
@@ -134,6 +149,14 @@ Event Storming 超級耗費心力，可以喝杯咖啡後再上路。或是在�
 
 ### Event 代表已經發生的事
 
+
+1. it has to be an orange sticky note5;
+2. it needs to be phrased at past tense, as item added to cart or ticket
+purchased;
+3. it has to be relevant for the domain experts.
+
+The Event will be the building block of our business-related storytelling. We’ll build our narrative as a sequence of related events.
+
 這邊的 Event 代表**領域專家所在乎的事件**，至於事件通常都是「已經發生過」的事情，因此要用過去式（英文就用 ed ，中文用「已」)
 
 會用過去發生過的事件來代表其實很合理，因為事件就像是商業流程的一個個節點，當你確立好節點後，會更好去思考中間的關聯性。
@@ -147,6 +170,10 @@ Event Storming 超級耗費心力，可以喝杯咖啡後再上路。或是在�
 在這階段，請大家可以自由的將 Event 貼到牆上，不過要請大致遵守由左到右的時間軸，不要錯亂順序。大家想到什麼就貼什麼，即使重複也沒有關係。通常這個階段不會互相交談，大家個做個的，也不需要領域專家參與，以免限制大家表達自己理解的權利。
 
 這邊主持人要盡量引導大家去表達自己的看法。一開始不熟悉 Event Storming 的話大家會因為害羞而不敢動手。主持人就可以用問問題的方式引導大家。
+
+### 由左到右的時間軸
+
+在張貼過程中，由於事件本身有時間性，所以務必要求大家遵照時間發展順序從左至右貼上去。
 
 ### 可以有平行事件
 
@@ -194,33 +221,82 @@ Event Storming 超級耗費心力，可以喝杯咖啡後再上路。或是在�
 
 ## Round4: Add Event Triggers
 
-### Actor & Command
+蒐集完大致的 Event 後，我們進入下一個階段：加入 Event Triggers (事件觸發器)來找出被我們忽略的其他 Event。這裡會介紹 Actor、Command、External Ssytem、Policy 等元素。
+這一階段你將會探索系統中不同的使用路徑並更加了解流程。
 
-### External System
+流程上可以先加上 Command 後再加上 System 與 Policy。
 
-### Policy
+### Command 命令與 Actor 角色
 
-通常用紫色 (lilac)，因為是承接事件與命令。
+Command 是一個使用者(或軟體)所做出的**決定**。讓我們站在使用者角度思考。
 
-## Advanced Tools
+如果 Event 是一個個的節點，Command 就是節點間的線，同時也是我們要建構軟體模型時，需要實作的行為。大部分的 Command 與 Event 都像是對稱的存在。比如「已經買早餐」Event 前面就會加上一個「買早餐」Command。
+當然，Command 一定由某個使用者（實際的人、虛擬的系統）所發出，因此可以在 Command 的左邊貼上 Actor 標籤。
+
+給大家一點時間，把 Command 加上去。原則上要讓畫面上的流程能夠流暢的走完。
+
+// 圖
+// legend
 
 ### Read Model
 
+不只是 DATA，同時也是做決策的工具。
+
+有時候，當你需要做決策時，需要一些數據做參考，這時候你就可以貼上 Read Model。
+
+The Command represents a decision made by a user in response to some information retrieved from the Read Model. The Actor is the person who issues the Command and the System is the thing that receives the Command. It is the responsibility of the System to respond to the Command and therefore trigger an Event.
+
 ### UI
+
+你可以依照上面 Read Model 的需求簡單畫出一個 Wireframe 供設計師參考。
+
+### System & Policy
+
+在系統開發中，難免會需要與外部系統合作完成功能。這個外部可能是公司裡的另一個系統、第三方服務、甚至是法條(ex: GDPR)。
+
+System 通常是由 Command 所觸發（ex: 第三方金流外部服務由「付款」觸發)，然後 System 會再產生新的 Event。這邊領域專家需要注意，他要將屬於外部系統不屬於自己系統關注的 Event 移出，比如說外部物流系統可能有「買家揀貨」、「超商拒收」、「超商驗貨」、「送貨中」、「商品已到指定超商」等等 Event，但事實上你的系統可能只在乎他最後到貨的 Event。
+
+同時，System 也會觸發不同分支的 Event，就像是外部系統總有成功與失敗的可能，此時領域專家與與會者就要一起思考失敗的處理路線是否是系統所關注的。
+
+// 圖
+// legend
+
+
+Policy 就是我們的系統如何對於特定 Event 的回應。「 Whenever Event Then Command 」。這裡有可能說謊的地方。當有人說「總是、立即」，當我們想要退款時，總是會立即退款。挑戰他：除非有對方的帳戶且合法。挑戰立即，銀行可能會在固定時間對帳。
+
+找出規則、潛規則以及自動化(listener, saga, process modeliing)。
+
+軟體之所以有價值，就是因為他可以將很多商業邏輯自動化。在 Policy 這邊，凡是系統中自動或手動的演算法或決策都可以標記上去。他的使用與法式「凡是...就...」(Whenever...then...)，所以會接在某個 Event 後面然後觸發一個至多個 Command。甚至可以加上額外的條件如「凡是...但如果...就...」。
+
+比如最常見的訂單對帳。當「訂單已對帳」Event 發出後就會觸發 Policy 「凡訂單已對帳，就寄信通知」、「凡訂單已對帳，就更改訂單帳款資訊」等等。
+
+Policy 就像 Event Storming 的偵探一樣，可以找出許多尚未發掘的問題或是現有流程矛盾之處。
+
+// 圖
+// legend
+
+Fun Fact: 通常用紫色 (lilac)，因為是 Event 與 Command 顏色混合。
 
 ## 一些小建議
 
-- 計時器，為每個 session 設定一定時間避免議題發散收不回來。
+- 計時器，為每個回合設定一定時間 (ex: 25 min) 避免議題發散收不回來。
 - 名詞清單 Glossry
 - 站著最有效率
 - 最好有一位專職 Facilitator ，不能與 domain expert 重複
 - 中間安排休息時間，吃吃零食喝喝水
 - **目的是為了讓工程師理解而非幫助 domain expert 探索產品功能**
-- 人數不必多，三至五個即可
-- 若一個問題卡關太久，可能是 spec 本身就不清楚，此時可以先記錄下來，待之後 de 開會去討論
-- 不要怕浪費，不然可以考慮使用線上版 Miro
+- 若一個問題卡關太久，可能是 spec 本身就不清楚，此時可以先記錄下來，待之後領域專家開會去討論
+- 不要怕浪費，不然可以考慮使用線上版工具 [Miro](https://miro.com/app/dashboard/)。
+
+// 圖
 
 ### Facilitator 職責
+
+一開始多鼓勵大家。鼓勵 ice breaker 第一個出來。
+
+一開始很難遵守「過去式」因此要嚴格檢查所有 Event。
+
+Registration, Enrolment or User Acquisition 等太抽象。
 
 ### Domain expert 職責
 
@@ -231,20 +307,6 @@ Event Storming 超級耗費心力，可以喝杯咖啡後再上路。或是在�
 Event Storming 對於團隊來說是一個非常好的「階段式學習」過程。過程中不但可以提早發現盲點，也能讓未來開發專注在核心功能上。最重要的事，他可以讓原本各自為政的團隊有機會聚在一起達成共識。
 
 使用 Event Storming 不但可以增加溝通與開發的效率，更重要的是帶來個人的成長。身為一名開發者，他的價值並不僅僅在於會用多少技術，也與他對於工作領域的了解程度有高度相關。當你對於某項產業的理解越深刻，加上技術能力，你就越難被取代。甚至，你可以從技術人員升為顧問，一同參與重要的商業決策。
-
-Keep the key / legend in view for groups new to Event Storming. You’ll lose your voice trying to explain each part repeatedly!
-Open with a simple, relatable example. This is especially important for those who do not speak English natively. I tend to use something people are familiar with, such as an online shop.
-Divide and conquer for the initial spine of the Events and let the madness begin!
-Hold off on the Aggregate name until absolutely necessary. I usually create a dummy name such as `combobulator` and put it on the wall. Teams tend to try naming it without fully knowing it. Once you’ve walked through the flow several times you’ll know enough to name it!
-Highlight and visualise assumptions you want to test and ensure they’re carried across to the backlog and tested accordingly. Without needing to add a new colour to the ES, I simply highlight with a dot sticker to denote this is an experiment that needs to be conducted.
-Hold the techies back initially as you’ll end up in the weeds of implementation too soon. This can be draining for non techies and will alter the engagement from the wider group as a result. Watch out for the Dungeon Master as per Alberto Brandolini’s article.
-If you have not got enough wall space use some foam boards as “fake walls” or roll out the modelling paper along some tables joined together.
-ES is a colour puzzle, but some people may not be able to differentiate between the bright colours. Add a simple icon to the corner of each Post-It and to the key so it is clear for colour blind people what each Post-It represents
-The physical modelling space and using tools everyone can interact with (Sharpies & Post-Its) creates a safe space for people to engage with the ES and challenge ideas people present. No tech skills or fancy licensed tooling needs to be purchased to engage in ES. I like to fold Post-Its that are removed and drop them to the ground underneath. The pile that forms represents the misconceptions that have been corrected.
-Space out the spine of your ES or you’ll spend a lot of time moving things along making room for the gaps in knowledge. Never start in the corner with it!
-Mark Pivot Events on the ES and, in big groups divide, and conquer around these boundaries to speed up the process. Ensure you stop and inspect to replay the narrative to all groups at regular time intervals. Rotate to different parts of the Event Storm so all the knowledge can be added when working on it this way
-Map the commands to User Stories when value slicing into a product backlog. When doing this, squash commands that logically fall into one feature. For traceability, a simple id code could be added to the Commands and then imported into whatever tool is used to store the User Stories in the backlog.
-As a facilitator, you have to keep the audience focused. To do this, ask lots of questions to tease out gaps on the narrative. Be sure to include people who may be over powered by loud group members. Just because someone is quiet does not mean they have no valuable input. Some questions I like ask are “How would it behave if something goes wrong?” or “Does this always happen or sometimes happen?”. Reversing the narrative can also be beneficial, “What must happen before this event occurs?”.
 
 Event Storming 是一個知識交流的絕佳場所，在打破穀倉效應 (silo effect) 的同時，商業團隊/領域專家可以重新檢視自己的知識並加上來自開發團隊的回饋（比如邊界問題、開發成本）；同時開發團隊也能對於領域知識有更深一層的了解，對於未來開發也會更有自信。
 
@@ -263,6 +325,7 @@ Event Storming 是一個知識交流的絕佳場所，在打破穀倉效應 (sil
 - [A step by step guide to Event Storming – our experience](https://www.boldare.com/blog/event-storming-guide/)
 - [YOW! West 2016 Paul Rayner - EventStorming #YOWWest](https://www.youtube.com/watch?v=bXm8Cznyb_s)
 
+- [cover photo](https://unsplash.com/photos/ZODcBkEohk8)
 - [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
   Strategic Domain Driven Design with Context Mapping
 - [https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
