@@ -1,4 +1,4 @@
-# Architecture
+# Clean Architecture
 
 ## ⭐️ 主要模式
 
