@@ -64,6 +64,7 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 • we’ll discover and validate the most compelling problem to solve;
 • we’ll highlight the significant risks involved with the status quo and
 possible new solutions.
+  - [參考](https://philippe.bourgau.net/4-tips-that-will-make-your-ddd-big-picture-event-storming-successful/)
 - 為流程建立模型 -> Make sure we're doing the right thing
   - 有明確範圍
   - 討論詳細流程。
@@ -91,6 +92,8 @@ possible new solutions.
 
 ![](https://forcomprehension.com/wp-content/uploads/2017/11/EventStormingSymbols-300x136.png)
 ![](https://dynalist.io/u/Bn47qUBjkFiXWXUGf2H8cAP3)
+![](https://miro.medium.com/max/6036/1*3C1KOlB_P5X_11nZcBpP5w.jpeg)
+(source: https://medium.com/@springdo/a-facilitators-recipe-for-event-storming-941dcb38db0d)
 
 我自己在進行時還會貼上其他的圖標海報，為了不佔空間，我會在底下介紹到這些便利貼時再貼出來。
 
@@ -279,6 +282,7 @@ Fun Fact: 通常用紫色 (lilac)，因為是 Event 與 Command 顏色混合。
 
 ## 一些小建議
 
+- 可以在每張便利貼上的邊邊加註不同的標誌，如 Events 是閃電、Command 是驚嘆號。這樣可以讓一些對顏色不敏感的參與者，
 - 計時器，為每個回合設定一定時間 (ex: 25 min) 避免議題發散收不回來。
 - 名詞清單 Glossry
 - 站著最有效率
@@ -288,7 +292,8 @@ Fun Fact: 通常用紫色 (lilac)，因為是 Event 與 Command 顏色混合。
 - 若一個問題卡關太久，可能是 spec 本身就不清楚，此時可以先記錄下來，待之後領域專家開會去討論
 - 不要怕浪費，不然可以考慮使用線上版工具 [Miro](https://miro.com/app/dashboard/)。
 
-// 圖
+![https://ithelp.ithome.com.tw/upload/images/20190923/20111997aljnGJqOEr.png](https://ithelp.ithome.com.tw/upload/images/20190923/20111997aljnGJqOEr.png)
+(Miro 使用示意圖)
 
 ### Facilitator 職責
 
@@ -324,6 +329,10 @@ Event Storming 是一個知識交流的絕佳場所，在打破穀倉效應 (sil
 - [cheatsheet](https://eventnotes.io/pdf/cheatsheet-process-modeling.pdf)
 - [A step by step guide to Event Storming – our experience](https://www.boldare.com/blog/event-storming-guide/)
 - [YOW! West 2016 Paul Rayner - EventStorming #YOWWest](https://www.youtube.com/watch?v=bXm8Cznyb_s)
+
+- [Detailed Agenda of a DDD Big Picture Event Storming - Part 1](https://philippe.bourgau.net/detailed-agenda-of-a-ddd-big-picture-event-storming-part-1/)
+- [Detailed Agenda of a DDD Big Picture Event Storming - Part 2](https://philippe.bourgau.net/detailed-agenda-of-a-ddd-big-picture-event-storming-part-2/)
+- [Detailed Agenda of a DDD Big Picture Event Storming - Part 3](https://philippe.bourgau.net/detailed-agenda-of-a-ddd-big-picture-event-storming-part-3/)
 
 - [cover photo](https://unsplash.com/photos/ZODcBkEohk8)
 - [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
