@@ -2,15 +2,11 @@
 
 ![cover](https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
-現代軟體的開發難度越來越高，關鍵點之一就是**逐漸複雜的商業邏輯**。傳統的流水線開發法疏遠了商業團隊與開發團隊間的距離，開發人員只能照著模糊又瑣碎的需求書摸石頭過河，最後專案無法如期交付，團隊間的隔閡也跟著擴大。
+隨著現代軟體的服務越來越複雜，開發人員要面對的**商業邏輯的複雜度**也跟著起飛。商業團隊的需求時常在變，而當開發人員只能照著模糊又瑣碎的需求書摸石頭過河時，專案失敗的風險跟著提升、團隊間的隔閡也跟著擴大。
 
-事實上，產品越複雜，它所需要的**領域知識往往是跨團隊的**，沒有任何單一團隊可以掌握它的全貌。但要媒合不同背景知識的人做有效地溝通非常的困難，很多人在導入 DDD Strategic Design 時，就是因為沒有與領域專家做好有效的溝通因而事倍功半。
+事實上，一項軟體產品所需要的**領域知識往往是跨團隊的**，沒有任何單一團隊可以掌握它的全貌。但要如何媒合不同背景知識的人做有效溝通非常的困難。幸好在 2013 年，一位義大利人 [Alberto Brandolini](https://medium.com/@ziobrando) 發明了 Event Storming 工作坊提供了一個不錯的解決方案。
 
-幸好在 2013 年，一位義大利人 [Alberto Brandolini](https://medium.com/@ziobrando) 為了有效與領域專家溝通因而發明了 Event Storming 工作坊。
-
-接下來我將用四篇文來為各位介紹這項溝通流程神器，分為「事前準備」、「展開風暴」、「進入軟體設計」以及「可以做得更好的部分」。這幾篇我會盡量用詞精簡，讓尚未看過前面篇的朋友們可以快速理解。
-
-這邊先聲明，**使用事件風暴不代表一定要採用 DDD，只要你有意想促進團隊的溝通與領域知識的理解**， Event Storming 永遠都是你的選項之一！
+本主題分為四篇，分為 **「事前準備」**、**「展開風暴」**、**「進入軟體設計」**以及 **「可以做得更好的部分」**，即使沒有學過 DDD 也可以上手。同時先聲明，**使用事件風暴不代表一定要採用 DDD，只要你有意想促進團隊的溝通與領域知識的理解**， Event Storming 永遠都是你的選項之一！
 
 本篇涵蓋內容：
 
@@ -18,7 +14,7 @@
 - Event Storming 應用場景
 - Event Storming 事前準備
 
-另外，事先說明一下在本系列中，如果我是指「某個便利貼」我會用英文如 Event、Command 來敘述，如果只是單純敘述事情我會用中文如事件來描述。
+註：在本系列中，我會用英文如 Event、Command 來指便利貼，而如果只是單純敘述事情我會用中文如事件來描述。
 
 ---
 
@@ -41,27 +37,32 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 
 如果你的工作流程出現以下症狀，請儘早服用 Event Storming：
 
-- 需求書瑣碎、難以理解、沒有明確架構。
+- 規格書的知識瑣碎、難以理解、沒有明確架構。
 - 討論時常陷入細節的爭論，或是過多的技術詞彙讓主題失焦。
 - 開發到一半還在理解功能在幹嘛。
 - 等到上線了才發現一堆 Bug。
 
 ## Event Storming 應用場景
 
-使用的場講點從巨觀到微觀：
+使用的場景點從巨觀到微觀：
 
-- **Big Picture 綜觀全局** ── 釐清混亂的商業流程，凸顯出合作關係、邊界、責任歸屬與不同利益相關者的觀點。
-  - 邀請任何有興趣的人、不用限制討論範圍
-  - 找出瓶頸、核心價值甚至是新的解決方案
-  - 主要以 Event、System、Question 為主。
-  - 適合新創或小團隊(人少、技術債少)
-- **Process Modelling 流程展示** ── 討論特定功能流程，以確保沒有理解錯誤。
-  - 有明確範圍
-  - 在細節中找出流程的 Bug。
-  - 會用到 Event、Actor、Command、System、Policy、Read Model。
-- **Software Design 軟體設計** ── 利用前面的產出進一步設計軟體
-  - 加入 Aggregate、Bounded Context 建立模型邊界。
-  - 對於用詞更加精準
+1. **Big Picture 綜觀全局** ── 釐清混亂的商業流程，凸顯出合作關係、邊界、責任歸屬與不同利益相關者的觀點。
+   - 邀請任何有興趣的人、不用限制討論範圍
+   - 找出瓶頸、核心價值甚至是新的解決方案
+   - 主要以 Event、System、Question 為主。
+   - 適合新創或小團隊(人少、技術債少)
+2. **Process Modelling 流程展示** ── 討論特定功能流程，以確保沒有理解錯誤。
+   - 有明確範圍，所以路徑越完整越好。
+   - 在細節中找出流程的 Bug，並且每個 Bug 都需要被處理。
+   - 再加上 Event、Actor、Command、System、Policy、Read Model。
+3. **Software Design 軟體設計** ── 利用前面的產出進一步設計軟體
+   - 加入 Aggregate、Bounded Context 建立模型邊界。
+   - 對於用詞更加精準
+
+你可以照順序從 1 至 3，或是混合使用皆可。
+
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997zEwTb8tQuA.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997zEwTb8tQuA.png)
+(source: https://www.slideshare.net/ziobrando/50000-orange-stickies-later)
 
 此外， Event Storming 也可以讓新進員工快速上手領域知識。想知道更仔細的，可以看這部 [GOTO 2018 • 50.000 Orange Stickies Later • Alberto Brandolini](https://www.youtube.com/watch?v=NGXl1D-KwRI)。
 
@@ -83,7 +84,7 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 ![legend](https://ithelp.ithome.com.tw/upload/images/20190923/20111997GZdzTXl6ko.png)
 (source: https://leanpub.com/introducing_eventstorming)
 
-甚至你可以更詳細地將各種便利貼用法都介紹出來：
+每種便利貼的詳細用法：
 ![](https://miro.medium.com/max/6036/1*3C1KOlB_P5X_11nZcBpP5w.jpeg)
 (source: https://medium.com/@springdo/a-facilitators-recipe-for-event-storming-941dcb38db0d)
 
@@ -103,20 +104,23 @@ Event Storming 是一個透過**高度互動**的方式，將企業或系統的*
 - **其他利益相關者 Other Stackholder**:  
   可能是參與專案的工程師、設計師，也可能任何能提供專業意見的人士如業務、商業分析師甚至是主管。
 
-通常一場會議 6-8 人就可以進行一場精彩的 Event Storming，至於超過 10 人以個人經驗來說場面就會開始混亂起來(除非主持人經驗豐富)。
+通常一場 Event Storming 有 6-8 人就可以進行一場精彩的~~混戰~~交流，至於超過 10 人以個人經驗來說，除非主持人經驗豐富，否則場面就會開始混亂起來。
 
 ### 火力展示你的道具
 
 你需要「非常多」的便利貼。千萬不要因為省錢就少買某個顏色，因為每個顏色都有各自的意義，無法互相替代。你會需要以下顏色的便利貼：
 
-- 橘色(正方形)：Event 事件
-- 藍色(正方形)：Command 命令
-- 黃色(小張長方形):Actor 角色
-- 紫色 (長方形): Policy/Process 商業政策/流程
-- 粉紅色(長方形)：System 外部系統
-- 紅色(正方形):Question 疑問/盲點
-- 綠色(正方形)：Read Model 資料讀取模型
-- 白色(大張正方形)：Uset Interface 使用者介面
+- 橘色（正方形 76\*76）：Event 事件
+- 藍色（正方形）：Command 命令
+- 紫色（長方形）: Policy/Process 商業政策/流程
+- 黃色（小張長方形）:Actor 角色
+- 黃色（長方形）:Aggregate 聚合
+- 粉紅色（長方形）：System 外部系統
+- 紅色（正方形）:Hotspot 熱點
+- 紅色（小張長方形）:Problem 疑問
+- 綠色（小張長方形）:Opportunity 機會
+- 綠色（正方形）：Read Model 資料讀取模型
+- 白色（大張正方形）：Uset Interface 使用者介面
 
 以上顏色皆可以自行調整，不過 Event 還是熟悉的橘色最對味。接著還有其他道具：
 
@@ -140,7 +144,7 @@ Event Storming 超級耗費心力，可以喝杯咖啡後再上路。或是在�
 
 ## Summary
 
-Event Storming 是一個知識交流、打破穀倉效應 (silo effect) 的絕佳場所。同時對於團隊來說是一個非常好的「階段式學習」過程。過程中不但可以提早發現盲點，也能讓未來開發專注在核心功能上。最重要的事，他可以讓原本各自為政的團隊有機會聚在一起達成共識。從商業層面來看， Event Storming 讓我們綜覽全局來辨識出問題的癥結點，並專注在核心競爭力上；從開發層面來看，Event Storming 提供了一個有效的建構軟體方向，讓開發更有自信且減少貧血模型的使用。
+Event Storming 是一個知識交流、打破穀倉效應 (silo effect) 的絕佳場所。同時對於團隊來說是一個非常好的「階段式學習」過程。過程中不但可以提早發現盲點，也能讓未來開發專注在核心功能上。最重要的事，他可以讓原本各自為政的團隊有機會聚在一起達成共識。從商業層面來看， Event Storming 讓我們綜覽全局來辨識出問題的癥結點，並專注在核心競爭力上；從開發層面來看，Event Storming 提供了一個有效的建構軟體方向，讓開發更有自信且減少貧血模型的使用。甚至可以將成果導入 DDD Strategic Design (DDD 剛出來時，就是因為溝通難度太高讓很多人放棄 Strategic Design 結果讓導入成效事倍功半)。
 
 除此之外，使用 Event Storming 除了提升開會的效率，更重要的是**帶來個人的成長**。一名開發者的價值並不僅僅在於會用多少技術，也與工作領域的熟悉程度有高度相關。當你對於某項產業的理解越深刻，加上技術能力，你就越難被取代。甚至，你可以從技術人員升為顧問，一同參與重要的商業決策。
 
@@ -148,6 +152,7 @@ Event Storming 是一個知識交流、打破穀倉效應 (silo effect) 的絕�
 
 以下都是非常好的學習資源，每篇都值得一讀：
 
+- [humank/EventStormingWorkShop](https://github.com/humank/EventStormingWorkShop/)
 - [A facilitators recipe for Event Storming](https://medium.com/@springdo/a-facilitators-recipe-for-event-storming-941dcb38db0d)
 - [50.000 orange stickies later](https://www.slideshare.net/ziobrando/50000-orange-stickies-later?from_action=save)
 - [事件風暴-領域建模](https://www.slideshare.net/ssusercab70d/ss-125442613)
@@ -163,6 +168,5 @@ Event Storming 是一個知識交流、打破穀倉效應 (silo effect) 的絕�
 
 - [cover photo](https://unsplash.com/photos/5Mh8iz9vqpY)
 - [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
-  Strategic Domain Driven Design with Context Mapping
-- [https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
+- [Strategic Domain Driven Design with Context Mapping](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
 - [https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps](https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps)

@@ -34,6 +34,18 @@
 
 https://philippe.bourgau.net/how-to-max-out-ddd-big-picture-event-storming-with-other-workshops/
 
+### Facilitator 職責
+
+一開始多鼓勵大家。鼓勵 ice breaker 第一個出來。
+
+一開始很難遵守「過去式」因此要嚴格檢查所有 Event。
+
+Registration, Enrolment or User Acquisition 等太抽象。
+
+### Domain expert 職責
+
+需要事前
+
 ## Summary
 
 Bounded Context Canvas
