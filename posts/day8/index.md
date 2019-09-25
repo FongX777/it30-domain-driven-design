@@ -1,4 +1,4 @@
-# 事件風暴輕鬆學 Part 2 - 風暴展開
+# Event Storming Part 2 - 風暴展開
 
 ![cover](https://images.unsplash.com/photo-1519582448254-8b89e9be55ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
@@ -6,27 +6,29 @@
 
 再次複習一下便利貼種類：
 
-- 橘色（正方形）：Event 事件
-- 藍色（正方形）：Command 命令
-- 紫色（長方形）: Policy/Process 商業政策/流程
-- 黃色（小張長方形）:Actor 角色
-- 黃色（長方形）:Aggregate 聚合
-- 粉紅色（長方形）：System 外部系統
-- 紅色（正方形）:Hotspot 熱點
-- 紅色（小張長方形）:Problem 疑問
-- 綠色（小張長方形）:Opportunity 機會
-- 綠色（正方形）：Read Model 資料讀取模型
-- 白色（大張正方形）：Uset Interface 使用者介面
+- 橘色(正方形)：Event 事件
+  - 藍色(正方形)：Command 命令
+- 紫色(長方形)： Policy/Process 商業政策/流程
+- 黃色(小張長方形)：Actor 角色
+- 黃色(長方形)：Aggregate 聚合
+- 粉紅色(長方形)：System 外部系統
+- 紅色(正方形)：Hotspot 熱點
+- 紅色(小張長方形)：Problem 疑問
+- 綠色(小張長方形)：Opportunity 機會
+- 綠色(正方形)：Read Model 資料讀取模型
+- 白色(大張正方形)：Uset Interface 使用者介面
+
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997MiZtrbGjJi.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997MiZtrbGjJi.png)
 
 ## Round 1: 從 Event 混亂開始
 
-![](./_timeline.png.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997ptZ4jH1E9g.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997ptZ4jH1E9g.png)
 
 在 Event Storming 的開頭主持人會先請領域專家簡介專案需求，然後由領域專家(或是主持人)在畫面正中央貼上第一張 Event。貼在中間一方面可以靈活拓展，另一方面也能讓所有人一起參與。
 
 如果該專案已經有個明確的大致流程，那可以再貼上關鍵流程如開頭結尾的 Event 或 Command，讓參與者對於專案需求有明確的範圍 (scope)。
 
-![start](./start.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997faPNf6eYe5.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997faPNf6eYe5.png)
 
 接著，讓我來介紹什麼是 Event。
 
@@ -51,7 +53,7 @@ Event 是 Event Storming 的基礎，我們會用一系列相關的 Event 完成
 
 同時主持人要注意兩點。第一點，主持人要反覆重申、提醒大家要用「過去式」，否則會產出很多不合格的 Event。第二，盡量引導大家去表達自己的看法。Event Storming 一開始會有些冷場是正常的，主持人可以藉由多鼓勵貼 Event 的人 (把內容唸出來)或用問問題的方式引導。
 
-![](./_outcome.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997BTgVC1EtsK.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997BTgVC1EtsK.png)
 
 ### 可以有平行事件
 
@@ -111,14 +113,14 @@ Event 是 Event Storming 的基礎，我們會用一系列相關的 Event 完成
 
 回合一到三通常可以視情況跑 1-2 次以補足流程中所有相關的 Event。如果都補完了，就可以進入 Event Trigger 部分找出更多隱藏起來的 Event。
 
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997BTgVC1EtsK.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997BTgVC1EtsK.png)
+
 ## Round4: 加入更多 Event Triggers
 
 加入更多 Event Triggers (事件觸發器)來找出那些被我們忽略的 Event。這裡會介紹 Actor、Command、External Ssytem、Policy 等元素。
 這一階段你將會探索系統中不同的使用路徑。
 
 流程上可以先加上 Command 與 Actor 後再加上 System 與 Policy。
-
-![](./big)
 
 ### Command 命令與 Actor 角色
 
@@ -128,7 +130,7 @@ Event 是 Event Storming 的基礎，我們會用一系列相關的 Event 完成
 
 主持人可以給大家一點時間，把 Command 一一加上去。原則上也是要讓畫面上的流程能夠流暢的走完。
 
-![](./command.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997JxIHueLGvV.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997JxIHueLGvV.png)
 
 ### Read Model
 
@@ -148,7 +150,7 @@ System 通常是由 Command 所觸發（ex: 第三方金流外部服務由「付
 
 同時，System 也會觸發不同分支的 Event，就像是外部系統總有成功與失敗的可能，此時領域專家與與會者就要一起思考失敗的處理路線是否是系統所關注的。
 
-![](./system.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/201119973RXyKr7tcF.png](https://ithelp.ithome.com.tw/upload/images/20190924/201119973RXyKr7tcF.png)
 
 Policy 就是我們的系統對於特定 Event 如何回應。這裡有可能說謊的地方。當有人說「總是、立即」，當我們想要退款時，總是會立即退款。挑戰他：除非有對方的帳戶且合法。挑戰立即，銀行可能會在固定時間對帳。
 
@@ -160,7 +162,7 @@ Policy 就是我們的系統對於特定 Event 如何回應。這裡有可能說
 
 Policy 就像 Event Storming 的偵探一樣，可以找出許多尚未發掘的問題或是現有流程矛盾之處。
 
-![](./policy.png)
+![https://ithelp.ithome.com.tw/upload/images/20190924/20111997lRxSJ3sB08.png](https://ithelp.ithome.com.tw/upload/images/20190924/20111997lRxSJ3sB08.png)
 
 Fun Fact: Policy 的紫色 (lilac) 代表 Event 與 Command 顏色混合。
 
@@ -199,6 +201,5 @@ Fun Fact: Policy 的紫色 (lilac) 代表 Event 與 Command 顏色混合。
 
 - [cover photo](https://unsplash.com/photos/p_Kmfx6wTKI)
 - [DDD: Recognising relationships between bounded contexts](https://markhneedham.com/blog/2009/03/30/ddd-recognising-relationships-between-bounded-contexts/)
-  Strategic Domain Driven Design with Context Mapping
-- [https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
+- [Strategic Domain Driven Design with Context Mapping](https://www.infoq.com/articles/ddd-contextmapping/?utm_source=Facebook_PicSee&fbclid=IwAR262EUJ7_4J3QV7tf0laEJGvHIvzfe7rMxx1xUF79Lte9bAg_OYirEGuVU)
 - [https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps](https://www.slideshare.net/YiChengKuo1/implementing-domaindriven-design-study-group-chapter-3-context-maps)
