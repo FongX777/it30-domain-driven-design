@@ -1,5 +1,7 @@
 # Event Storming Part 3 - 軟體設計
 
+-> Bounded Context Canvas
+
 ![cover photo](https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
 
 今天來跟大家聊聊，該怎麼把 Event Storming 的成果進一步轉換為軟體設計吧！
@@ -20,6 +22,8 @@ Aggregate (聚合)的意思就是軟體中的 Model，只是他的顆粒度可�
 通常來說，會飆上 Aggregate 的都是你核心的 Model 元件，這對之後的程式碼設計很有幫助。
 
 ![https://ithelp.ithome.com.tw/upload/images/20190925/20111997LKR46X1xEJ.png](https://ithelp.ithome.com.tw/upload/images/20190925/20111997LKR46X1xEJ.png)
+
+- Hold off on the Aggregate name until absolutely necessary. I usually create a dummy name such as `combobulator` and put it on the wall. Teams tend to try naming it without fully knowing it. Once you’ve walked through the flow several times you’ll know enough to name it!
 
 ### Aggregate 就像是一台 state machine
 
