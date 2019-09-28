@@ -52,6 +52,22 @@ Event Storming 最大的優點之一就是打破團隊間的穀倉效應，讓�
 
 以下我會介紹一些我個人實作上踩過的雷與建議：
 
+### 與 DDD 整合的第一個規則：不要談 DDD
+
+很多人使用 Event Storming 是為了進入之後的 DDD 實作，但 DDD 是一個非常多「行話 (jargon)」的設計方法，當你沈浸在只有你才聽得懂的模式時，就疏遠了與其他人的距離，甚至是同為開發者也是如此。
+
+如果團隊內對於 DDD 的理解有限，那與其用 Bounded Context 不如說是「功能性區塊(Functional Area)」，與其說 Aggregate 不如說「當實體改變時，需要負責的完整體」
+
+> Talk about Functional Area instead of Bounded Context.
+
+Ubiquitous Language 或是通用語言聽起來仍有些裝權威，不如用「共通單字庫」。
+
+> Talk about Shared Vocabulary instead of Ubiquitous Language.
+
+的確，使用這些 DDD 術語會更加精確表達你的概念，但如果一些名詞可以更好理解只是缺乏一點精準度是可以被接受的。其實不只是開發者，對於那些突然被抓來的商業團隊，跟開發者做密集的溝通時也會有疑慮，怕自己沒有足夠的專業可以跟上，因此用大家更好理解的詞彙會更好！
+
+當你放下大家使用 Event Storming 的戒心，那對於往後導入 DDD 也會有很大的幫助！
+
 ### 多一張圖示你就少十分鍾解釋
 
 我非常建議大家不論是手繪還是列印，將各種便利貼的用法做成海報(或國軍小卡)張貼出來，讓大家可以第一眼就看到。

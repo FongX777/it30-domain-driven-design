@@ -152,6 +152,7 @@ Event Storming 是一個知識交流、打破穀倉效應 (silo effect) 的絕�
 
 以下都是非常好的學習資源，每篇都值得一讀：
 
+- [series about how to use Event Storming to kick start architecture on good tracks.](https://philippe.bourgau.net/misadventures-with-big-design-up-front/)
 - [humank/EventStormingWorkShop](https://github.com/humank/EventStormingWorkShop/)
 - [A facilitators recipe for Event Storming](https://medium.com/@springdo/a-facilitators-recipe-for-event-storming-941dcb38db0d)
 - [50.000 orange stickies later](https://www.slideshare.net/ziobrando/50000-orange-stickies-later?from_action=save)

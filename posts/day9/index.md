@@ -47,9 +47,27 @@ Aggregate (聚合)的意思就是軟體中的 Model，只是他的顆粒度可�
 - 你的系統如何需要他？
 - 如果我要把它寫成一個 class ，他需要做些什麼？
 
+這邊有一個實用的方法供大家參考，也是 Alberto Brandolini 本人推薦的。那就是先放「空白的 Aggregate」，但在 Aggregate 中會寫上一些固定規則 (Invariant)，比如這個 Aggregate 的新增修改時會觸動的一些檢查，在過程中都不需提到 Aggregate 的名稱。
+
+之後在依照這些還沒得到名字的 Aggregate 用上面的業務規則各自分類，此時你就會知道應該屬於誰了。
+
+Only later ask them to group the business rules ‘as-they-would-with-code’. Developers usually get this well. They’ll naturally find good names for these Aggregates (of business rules).
+
+### Aggregate 效能考量
+
 ## Bounded Context 找出軟體的邊界
 
 有了 Aggregate 後，你可以拿出你的奇異筆將你覺得功能類似的地方圈起來，這個界線就有可能成為你的 Bounded Context。關於 Bounded Context 的敘述可以看前面的文章。
+
+### 分出不同 Bounded Context 的類型
+
+- Core
+- Generic
+- Supportive
+
+https://philippe.bourgau.net/build-or-buy-software-identify-your-core-functional-areas-with-event-storming-and-ddd/
+
+### 彼此依賴關係
 
 ## 導入 DDD
 
