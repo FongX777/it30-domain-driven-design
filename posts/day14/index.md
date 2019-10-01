@@ -1,15 +1,28 @@
-# DDD 架構：六角形架構 Port-Adapter Architecture
+# DDD 架構：Clean Architecture 讓你一次滿足 DDD、 TDD 與 BDD
 
-![https://ithelp.ithome.com.tw/upload/images/20190929/20111997eNi5Tetxii.png](https://ithelp.ithome.com.tw/upload/images/20190929/20111997eNi5Tetxii.png)
-([DDD, Hexagonal, Onion, Clean, CQRS, … How I put it all together](https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/))
+## 整合 TDD
 
-## 進入服務化的時代： Port-Adapter Architecture
+### TDD 定義
 
-### 著重在服務互相串接
+### BDD 整合
 
-### 可以用 Event 來彼此溝通
+### TDD 整合
 
-這邊的一個個六角形都可以當作一個 Bounded Context 來看待，而前面的 Event Storming 告訴了我們。
+## 應用 TDD 與 BDD
+
+1. 先撰寫測試 ``
+2. 寫 Use Case 然後失敗
+3. 發現需要 Entity，於是寫 Entity 測試
+4. Entity 撰寫
+5. 發現需要 Repository，於是先寫 Repository 測試
+6. 撰寫 Repository
+7. 回頭撰寫 Use Case
+
+之後會有一篇專門介紹如何應用！
+
+## BDD 簡介
+
+## 從一個 CRUD 來看 Clean Architecture
 
 ## Summary
 
