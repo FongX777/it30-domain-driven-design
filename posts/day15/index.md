@@ -1,243 +1,300 @@
-# DDD 戰術設計： Entity 概念與實作
+# DDD 戰術設計：Value Object 概念與實作
 
-![](https://images.unsplash.com/photo-1567826722186-9ecdf689f122?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)
+![](https://images.unsplash.com/photo-1549461520-fb80f766c147?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1190&q=80)
 
-## Entity 給我定義定義
+前一篇提到，Entity 就像是我們故事中的主角，接著，我們來介紹配角：Value Object。學 DDD 時，當你一學會 Entity，你就會把所有東西都當作 Entity。但當你了解 Value Object 後，你就會開始覺得萬物皆 Value Object，甚至悔恨怎麼這麼晚才認識他。
 
-當我們與領域專家訪談需求時，總會有一些物件或概念常常出現，且需要有標誌來辨明其唯一性，如顧客、訂單、商品等等。這些物件不被他們的屬性所辨識(比如年齡、金額、類別)，而是由一個專屬的身份標誌 (Identity)來辨識。
+另外，Value Object 的概念也非常適合用於 Functional Programming 中。甚至，我們應該盡量使用 Value Object 而非 Entity。
 
-這種時候，我們就需要 Entity 的幫助讓我們在不同的物件中找到我們要的那一個。Entity 最大的特徵就是有 Identity 的概念，所以常會搭配一個擁有唯一值的 ID 欄位。但這邊要澄清一個誤解，**不是有 ID 就是 Entity，重點是你在不在乎他生命週期的變化。**
+## 認識 Value Object
 
-讓我們看一下 Eric Evans 對於 Entity 的敘述：
+與 Entity 相反，當一個物件**沒有概念上的標識 (conceptual identity)**，**而你只關心它的屬性時**，這個物件就可以建立成 Value Object。所以值物件可以是 `3`, `1.5`, `"1234"`, `Date(2019-10-1)`、姓名、貨幣、地址，甚至是更複雜的物件等等。不過在實作上，我們會會特別指稱那些被包成物件的稱作 Value Object。
 
-> An Entity is an object defined not by its attributes, but a thread of continuity and identity, which spans the life of a system and can extend beyond it.  
-> `Entity` 是一個不是由屬性所定義的物件。它表示了一條有連續性的身份標示線，這條線橫跨了系統的生命週期甚至更長。
+最常見的例子就是設計金錢的類別，你會使用一個包含有「元」+ 「幣值」的 Value Object 來表達金錢的概念，而非將兩個屬性散落在兩處，因為只有「元」的話，你不知道是美金還是台幣，而只有「幣值」也會有同意的疑慮。
 
-這句話告訴我們，當一個物件的生命期開始被你追蹤時，你就需要為它建立身份標誌 (identity)，而這個物件我們就稱為 Entity。
+此外，Value Object 的屬性都是為了要**描述某一個事物的特徵**。比如以上面的金錢做舉例，你在乎的是這些錢「描述」了你的資產總額，而不在乎錢是的流水編號、幾年印刷製成等等。
 
-舉一個例子，銀行帳戶就是一個明顯的代表，使用者需要追蹤銀行帳戶各種狀態 (餘額、互動紀錄)的變化，所以每一個帳戶都必須要有自己獨特的 ID 或是相關的代號來表達唯一性，才不會跟系統中其他的銀行帳戶搞混。
+> 我們只關心 Value Objects 是什麼 (what)，而不關心他們是誰。
 
-註：這裡的 Entity 是一個物件，或者說是一個 Class，跟 Clean Architecture 中的 Entity Layer 是不同的概念。
+讓我們來更深入認識 Value Objects 的幾項特徵，分別有**描述性**、**不變性**、**概念整體性**、**替換性**、**相等性**、**無副作用**。
 
-### Entity 的特徵
+### 特徵 1: 它度量或描述了領域中的某項概念
 
-我們總結一下 Entity 的特徵：
+一間房子有戶籍地址作為標示，所以在系統中你把它當作一個 Entity，但房子擁有屋齡、顏色，這些東西並不是實際的東西，而是對房子本身的度量。屋齡描述了這間房子建成後到現在的時間，而顏色是對於他外觀的描述。
 
-1. Entity 最重要的是他的 ID。
-2. 兩個 Entity 不論其他狀態，只要 ID 相同就是相同的物件。
-3. 除了 ID，他們其他的狀態是可變的 (mutable)。
-4. 他們可能擁有很長的壽命，甚至不會被刪除。
-5. 一個 Entity 是可變的、長壽的，所以通常會有複雜的生命週期變化，如一套 CRUD 的操作。
+而這個度量的特性會在下一個特徵中更加明顯。
 
-在系統中，越多的 Entity 代表系統的變化越多、複雜性越高，所以除非必要，不然會盡量減少 Entity 的使用。因此要注意，即使一個概念「聽起來像是」一個 Entity，仍需要**視使用情況**來辨認他的資格，
+註：度量是指對於一個物體或是事件的某個性質給予一個數字。
 
-以體育比賽的位子做舉例，如果今天賣的是對號座，那你的位子因為要追蹤使用狀況且每一個位子的標示 (幾排第幾個)，所以會成為 Entity。但如果今天賣的只是位子數量，拿到票就可入場，那這樣的位子可能就不會設定在 Entity。
+### 特徵 2: 不變性 (Immutability)
 
-### Typescript 程式碼來實作
+**一個 Value Object 在創建後就不能再改變了**，不過作為某個物件上的描述性屬性，**他可以被替換掉**。繼續用房子做例子，一間房子作為 Entity，他的屬性「顏色」這個 Value Object 可以被替換掉，如從「藍色的」房子變成「紅色的」房子，但你不會說「藍色」變成了「紅色」。
 
-實作上，我們會建立一個 abstract class 並且宣告 `Id` 與 `Props` 作為 Generic Types 讓繼承者靈活選擇自己要的型別。
+實作上，我們會用 `house.color = new Color('Red')` 來代替 `house.color.set('Red')` 的作法。如果你覺得這個例子過於簡單，
+所以帶來的效益不大，那就讓我們看看下一個特徵：概念整體性。
+
+### 特徵 3: 將相關屬性組成一個「概念整體 (Conceptual Whole)」
+
+先解釋什麼叫做「概念整體 (Conceptual Whole)」，這就像前面提到的金錢的例子，你必須要將相關的概念整合起來，才能**完整且正確地**描述一件事情。
+
+想想看，當你今天要去銀行換匯時，你想拿 300 台幣換 10 美金。這時候你有可能遇到：
+
+1. 行員拿一支簽字筆在你的台幣上寫「變成 10 美金」
+2. 行員會收下你的 300 台幣，然後直接拿出 10 美金**替換**給你。
+
+如果你覺得第一種可能性很好笑，那你可以想想很多程式都是這樣寫的。一旦你不顧概念整體性、直接修改內部狀態，你就會難以保證業務正確性。所以當你看到這個設計：
 
 ```typescript
-abstract class Entity<Id, Props> {
-  readonly id: Id;
-  protected props: Props;
-
-  protected constructor(id: Id, props: Props) {
-    this.id = id;
-    this.props = props;
-  }
-
-  public abstract equals(obj?: Entity<Id, Props>): boolean;
+class Product {
+  name: string;
+  amount: number;
+  currency: string;
 }
 ```
 
-- 使用 `props` 可以減少 constructor 賦值的麻煩，並且讓外界無法直接存取物件的屬性。
-- `equals` 裡可以自定義相等的定義，通常是做 ID 的相等判斷。
-
-對於其他語言如 C#、JAVA 來說，常見的做法是僅宣告 ID 作為 Generic Type，而如果是走 Functional Programming 形式的，為了追求不變性，可能就只定義一個基本的資料結構，然後靠其他 function 去操作，或是使用下一篇將介紹的 Value Object 模式。
-
-## 如何產出 Entity Id
-
-既然 Entity 最重要的屬性就是他的 ID，那我們就來探討一下生產 ID 的機制吧！
-
-### 來自用戶的輸入
-
-這是一個非常直接的做法，比如使用用戶的 email 或是身分證字號等等作為 ID，但也容易造成額外的成本。最大的成本就在於，你需要由用戶負責產生符合需求的身份認證資料非常困難。此時**的 ID 可能是唯一的，但卻有可能是不正確的**。
-
-甚至，身分證字號也有[重複](http://www.rootlaw.com.tw/LawArticle.aspx?LawID=A040040041003400-1060718)的可能性。
-
-因此，我們可以將用戶輸入的資料作為 Entity 的屬性。這些屬性可以用來做搜尋用，但大多時候並不適合作為 Entity 的 ID。
-
-### 使用持久化機制來產生
-
-最常見的就是使用資料庫自動生成 ID，最常見的就是 SQL 對 ID 下 `AUTO_INCREMENT` 讓 ID 的值自動遞增。又或者也可以向資料庫索取一個 UUID (或 GUID) 作為 ID 的值。
-
-這樣的做法好處是可以減少程式的複雜性，直接把產生的工作交給持久化機制處理。但也容易招致效能問題的疑慮(UUID/GUID 的產生)。而且當你無法從程式碼找出 ID 的生產機制時，也會增加程式碼的隱含性不利於閱讀。
-
-另外，使用持久化機制時，也需要特別考量這個 ID 的生成應該要在該物件持久化 (ie 存入資料庫) 之前或是之後，以配合程式的需求。
-
-註：這裡會使用「持久化」一詞是因為儲存資料的方式不止資料庫一種，故用更通稱的方式描述。
-
-### 在程式中產生
-
-在程式中產生 ID 是最常見的方法之一，這種方法好處是可以更容易掌握生產的時機，此外，更可以客製化你的 ID 格式，比如一筆訂單你可以用 `order-20190930-c764e787-8182` 作為 ID，如此一來，在 debug 時就不用被一堆天文數字般的 ID 搞得昏頭脹腦。所以以個人經驗來說，即使增加了一點複雜度，但我會最推薦這個方式。
-
-當然，對於一些效能要求更高的情境，如果你對於 UUID 產生的效能不夠滿意，也可以事先產生好 ID 後快取起來，
-
-至於該在程式中的何處產生？在 DDD 設計模式中，如果你的 Entity 剛好是 Aggregate Root (聚合跟，之後會詳談)時，其實很適合放在 Repository 中產生。就像下面的程式碼一樣（可以直接跳到 Application Service 層)
+應該將相關的概念 `amount` 與 `currency` 合成一個 Value Object 如下：
 
 ```typescript
-// -------- Domain Layer ------------
-// domain/model/person/index.ts
-interface PersonProps {
+class Product {
   name: string;
+  money: Money;
 }
-class Person extends Entity<string, PersonProps> {
-  constructor(id: string, props: PersonProps) {
-    super(id, props);
-  }
+class Money {
+  amount: number;
+  currency: string;
+}
+```
 
-  changeName(name: string) {
-    // ...
-  }
+註：這邊為追求簡便，故將金額的 `amount` 用 JS 的 `number` type 表示，但實際應用上使用 `number` 在小數點部分並不夠精確，用 `decimal` 相關的 type 會更準確。
 
-  static createPerson(parmas: { id: string; name: string }): [string, Person] {
-    // 名字長度不能小於 2
-    if (name.length < '2') {
-      return ['Name length should be less than 2'];
+### 特徵 4: 當度量與描述改變時，可以用另一個 Value Object 替換
+
+Value Object 的可替代性前面已經稍微提到。為了顧及不變性與概念整體性，當 Value Object 被改變時，我們**會重新賦值給它**。就像是你要把變數 `num` 從 3 改成 4 時，你會直接 `num = 4` 一樣。
+
+假如說今天我要修改商品的金額從美金 100 變成美金 200，那我的程式碼會像這樣：
+
+```typescript
+class Product {
+  name: string;
+  money: Money;
+
+  constructor(name, money) {
+    this.name = name;
+    this.money = money;
+  }
+  changePrice(money: Money): void {
+    this.money = money;
+  }
+}
+
+const p = new Product('A', new Money(100, 'USD'));
+p.changePrice(new Money(200, 'USD'));
+```
+
+### 特徵 5: 相等性
+
+既然 Value Object 沒有身份標識的概念，那麼只要兩個 Value Object 身上的屬性的值都相等，那我們就會說這兩個 Value Object 是相等的。這就好像「藍色的」房子與「藍色的」氣球雖然是不同的東西，但兩個身上的屬性「藍色」是相同的描述特徵。
+
+這個優勢結合上面的不變性，如果剛好這個 Value Object 是用來描述一件「唯一」性的屬性時，剛好就與 Entity ID 的需求不謀而合了！因此很多人會把 Entity ID 建模成 Value Object。後面我們會講到怎麼做到這一點。
+
+### 特徵 6: 無副作用
+
+加上這一點，Value Object 使用起來表達力好、容易建立、而且還很安全呢！我們都知道管理一個有狀態的物件可以造成多大的災難，當你不知道你的物件是被誰偷改狀態時，你會很難 Debug。
+
+無副作用這個特徵讓 Value Object 不只是一個資料結構或是一個屬性的容器，而增加很多領域知識的表達能力。比如在你的領域知識中，你商品的幣值在設定後不可更改，僅可調升或調降金額，那程式碼會變這樣：
+
+```typescript
+class Product {
+  name: string;
+  money: Money;
+
+  increasePriceAmount(val: number): void {
+    this.money = money.add(m);
+  }
+  decreasePriceAmount(val: number): void {
+    this.money = money.subtract(val);
+  }
+}
+
+class Money {
+  amount: number;
+  currency: string;
+  constructor(amount: number, currency: string) {
+    if (amount < 0) {
+      throw new Error('Money amount should be positive');
     }
-    return [undefined, new Person(params.id, { name: params.name })];
+    if (!isCurrencyValid(currency)) {
+      throw new Error('Money currency should be valid');
+    }
+    this.amount = amount;
+    this.currency = currency;
   }
 
-  public equals(obj?: Entity<string, PersonProps>): boolean {
-    if (obj == null || obj === undefined) {
+  add(val: number): void {
+    // 回傳新物件!
+    return new Money(amount + val, this.currency);
+  }
+  sub(val: number): void {
+    if (val > this.amount) {
+      throw new Error('Money amount cannot be subtract to negative');
+    }
+    // 回傳新物件!
+    return new Money(amount - val, this.currency);
+  }
+}
+
+const p = new Product('A', new Money(100, 'USD'));
+p.increasePriceAmount(100); // p.money: { amount: 200, currency: 'USD' }
+p.decreasePriceAmount(50); // p.money: { amount: 50, currency: 'USD' }
+p.decreasePriceAmount(100000); // throw Error...
+```
+
+可以觀察到，Value Object **可以擁有行為，但每次都要回傳一個新的物件。**如此一來，可以透過重用 constructor 或其他 function 來驗證新的回傳 Value Object 是正確的！
+
+## 實作 Value Object
+
+讓我們取出以上特徵中的不變性、相等性，我們可以建立出一個 Value Object 的 Base Class:
+
+```typescript
+interface LiteralObject {
+  [index: string]: unknown;
+}
+
+abstract class ValueObject<Props extends {}> {
+  // 重點 1: Readonly，外面不能擅改資料
+  props: Readonly<Props>;
+
+  constructor(props: Props) {
+    // 重點 2: Object.freeze 確保連 Object 屬性裡的資料也不能更動
+    this.props = Object.freeze(props);
+  }
+
+  /**
+   * Check equality by shallow equals of properties.
+   * It can be override.
+   */
+  equals(obj?: ValueObject<Props>): boolean {
+    if (obj === null || obj === undefined) {
       return false;
     }
+    if (obj.props === undefined) {
+      return false;
+    }
+    const shallowObjectEqual = (
+      props1: LiteralObject,
+      props2: LiteralObject
+    ) => {
+      const keys1 = Object.keys(props2);
+      const keys2 = Object.keys(props1);
 
-    const isEntity = (v: unknown): v is Entity<string, PersonProps> => {
-      return v instanceof Person;
+      if (keys1.length !== keys2.length) {
+        return false;
+      }
+      return keys1.every(
+        key => props2.hasOwnProperty(key) && props2[key] === props1[key]
+      );
     };
-    if (!isEntity(obj)) {
-      return false;
-    }
-    return this.id === obj.id;
+    // 重點 3: 針對屬性做比較，如果全部相等就回傳 true
+    return shallowObjectEqual(this.props, obj.props);
   }
-}
-
-// domain/model/person/PersonRepository.ts
-interface PersonRepository {
-  nextId(): string;
-  fromId(id: string): Person;
-  save(person: Person): void;
-}
-
-// -------- Application Service Layer ------------
-// application/person/AddPerson.ts
-class AddPerson {
-  private personRepo: PersonRepository;
-  constructor(personRepo: PersonRepository) {
-    this.personRepo = personRepo;
-  }
-  execute(input: { name: string }) {
-    const id = this.personRepo.nextId();
-    const [err, person] = Person.create({ id, name: input.name });
-    if (err) {
-      // error handling
-    }
-
-    // 成功產生後，就存入持久化機制
-    this.personRepo.save(person);
-
-    // 回傳資料處理
-    ...
-  }
-}
-
-// -------- Infrastructure Layer ------------
-// infrastructure/repository/person/SqlPersonRepository.ts
-class SqlPersonRepository implements PersonRepository {
-  // implementation details
 }
 ```
 
-### 由另一個 Bounded Context 提供
+### 使用 Value Object 作為 Entity ID
 
-最後一種，也是最複雜的一種就是來自於另一個 Bounded Context 提供的 ID。這種可能出現在當你需要調用 API 的時候，得到對方的資料後存取下來。這種方式的複雜點在於，你不只要考慮本地端的 Entity，也需要考慮外部 Bounded Context 的改變情況，雖然可以透過訂閱另一個 Bounded Context 的方式做到，但仍舊十分麻煩。
-
-所以通常與外部 Bounded Context 調用 API 時，都會更傾向使用下一篇會提到的 Value Object 做物件的傳遞。
-
-## 設計一個 Entity
-
-有了 Entity ID 產生的機制，我們來聊聊如何設計一個 Entity。
-
-設計一個 Entity 可以透過以下步驟：
-
-1. 找出關鍵資料。將一些能用於搜尋的屬性留在身上，其他可以考慮設計 Value Object。
-2. 找出或設計出 Entity 的 ID
-3. 找出關鍵行為與對應的業務規則，然後照著 Ubiquitous Language 命名後使用。
-
-比如我要有一個 `User` class，他主要有名字與地址兩項屬性，且都可以更改。但有一個前提，在改名字時，他需要是「有效」的狀態(非停權戶)。
-另外，名字最短不能少於兩個字，而地址需要包含城市、鎮、路、詳細資料四個欄位。
+回到 Entity，當時我們使用一個 Generic Type 作為 ID 的型別，在這裡我們可以套用 Value Object 的概念作轉換，然後應用回 Entity。
 
 ```typescript
-interface AddressProps {
-  city: string;
-  county: string;
-  street: string;
-  detail: string;
+// EntityId
+import { ValueObject } from './ValueObject';
+interface EntityIdProps<Value> {
+  value: Value;
+  occuredDate: Date;
 }
-class Address extends ValueObject<AddressProps> {}
+export abstract class EntityId<Value> extends ValueObject<
+  EntityIdProps<Value>
+> {
+  constructor(value: Value) {
+    super({ value, occuredDate: new Date() });
+  }
 
-interface UserProps {
-  name: string;
-  active: boolean;
-  address: Address;
+  get occuredDate(): Date {
+    return this.props.occuredDate;
+  }
+  get value(): Value {
+    return this.props.value;
+  }
+
+  toString(): string {
+    const constructorName = this.constructor.name;
+    return `${constructorName}(${String(
+      this.props.value
+    )})-${this.occuredDate.toISOString()}`;
+  }
+
+  toValue(): Value {
+    return this.props.value;
+  }
+
+  equals(entityId: EntityId<Value>): boolean {
+    if (entityId === null || entityId === undefined) {
+      return false;
+    }
+    if (!(entityId instanceof this.constructor)) {
+      return false;
+    }
+    return entityId.value === this.value;
+  }
 }
 
-class User extends Entity<string, UserProps> {
-  changeName(name: string): void {
-    // 名字長度不能小於 2
-    if (name.length < '2') {
-      // error handling
-    } else {
-      this.props.name = name;
-    }
-  }
-  changeAddress(address: Address): void {
-    this.address = this.address.update(address);
-  }
-
-  static createUser(parmas: {
-    id: string;
-    name: string;
-    address: Address;
-  }): [string, User] {
-    // 名字長度不能小於 2
-    if (name.length < '2') {
-      return ['Name length should be less than 2'];
-    }
-
-    return [
-      undefined,
-      new User(params.id, {
-        name: params.name,
-        active: true,
-        address: params.address
-      })
-    ];
-  }
-
-  public equals(obj?: Entity<string, UserProps>): boolean {
-    // ...
-  }
+// Back to Entity
+abstract class Entity<Id extends EntityId<unknown>, Props> {
+  ...
 }
 ```
+
+在 DDD 中，並沒有限制說， Entity ID 一定要用 Value Object 的形式呈現，不過我們會在後面的章節闡明這樣做可以帶來的好處。
+
+### Value Object 持久化
+
+講到持久化的議題時，需要先釐清一件事情：**領域層的物件與資料庫的物件是不同的東西**，對於一些常用 ORM 框架的人來說，最直接的作法就是把透過 ORM 拿出的資料庫物件直接作為領域物件來使用。這是十分危險的行為，因為當你把這兩個概念綁在一起，你就很難擴展你的業務能力。
+
+因此，當你在設計你的 Entity 或 Value Object 時，**資料庫的考量是次要的**。DDD 是根據業務能力與商業邏輯來設計領域物件，再接著設計資料庫的模型，而非反向過來。
+
+所以一個 Entity 在資料庫的表中通常會有一個欄位放 ID，但 Value Object 的資料表**不一定不能有 ID**，這部分要看資料庫存取與搜尋的方便度做設計。
+
+為了要翻譯兩個概念，通常我們會實作 Mapper Pattern 作為翻譯層，將兩者翻譯過後才轉過去。
+
+不過 Value Object 的概念的確可能讓資料庫的設計與管理更加複雜了一些，之後將介紹 Aggregate 的概念，將管理相關連的 Entity 與 Value Object 的資料存儲有更多的規則。
+
+### 如何分辨 Value Object 與 Entity
+
+在做 DDD 設計時，我們會偏好 Value Object 更勝 Entity。而判斷這兩者的標準就在於**系統在不在乎這個物件的生命週期變化**，並非在於有無 ID 或相關的識別欄位。甚至，同一個概念物件在不同的 Bounded Context 中，也可能被分別建成 Entity 與 Value Object。
+
+在兩個有上下游關係的 Bounded Context 間，如果有一個概念從上游留到下游時，盡量使用 Value Object 來表示這個概念。比如今天有兩個系統：管理會員的身份與權限管理系統 (IAM) 與消費相關的購買系統 (Purchasing) 。今天消費者要下單，會先從 IAM 取得會員資料與權限，然後回傳給 Purchasing 去產生訂單。
+
+通常在 Purchasing 會把進來的會員作為 Entity 來操作，但以 DDD 角度來說，把進來的會員作為 Value Object 會更好。
+
+一開始覺得很奇怪，如果會員要下訂單，那會員勢必要是一個 Entity 吧 ? 但仔細想想，在 Purchasing 中如果不會修改到會員資料，那在沒有狀態變更的情況下， Purchasing 中的會員確實是 Value Object 無誤。而且如此一來 Value Object 也減少了我們需要維護潛在狀態變更的複雜度。
+
+讓我們用兩張來自 PPPoDDD 的圖片來做整理與比較：
+
+Entity: ![https://ithelp.ithome.com.tw/upload/images/20191001/20111997OQMIOfb65E.jpg](https://ithelp.ithome.com.tw/upload/images/20191001/20111997OQMIOfb65E.jpg)
+
+Value Object: ![https://ithelp.ithome.com.tw/upload/images/20191001/201119972ZPL9EhJfA.jpg](https://ithelp.ithome.com.tw/upload/images/20191001/201119972ZPL9EhJfA.jpg)
+
+Entity 除了擁有一個 ID 以外，還可以包含多個 Value Object 或 Entity；而 Value Object 同時也可以擁有 Value Object 與 Entity (勁量避免)。
 
 ## Summary
 
-Entity 可以說是我們系統模型中的主角，就像看連載漫畫時的主角一樣，我們會跟著劇情的發展追蹤主角的成長與變化。所以接下來我們就來介紹配角 Value Object，看看他可以如何襯托主角。甚至到最後你可能還會覺得沒有主角也沒有關係(?。
+今天介紹了 Value Object 的六項特徵：**描述性**、**不變性**、**概念整體性**、**替換性**、**相等性**、**無副作用**。讀者不妨找一些身邊的事物舉例子，會更好理解 Value Object 的含義。
+
+同時，Value Object 的多項好處讓他非常適合作為不同 Bounded Context 或系統間溝通的形式來降低複雜度。不過需要注意，不要一不小心把所有東西都當作 Value Object 使用而忘記了 Entity 的存在。
 
 ## Reference
 
-- [cover photo](https://unsplash.com/photos/RDufjtg6JpQ)
-- https://www.sitepoint.com/ddd-for-rails-developers-part-2-entities-and-values/
+- [cover photo](https://unsplash.com/photos/HgtVLFq9lQA)
+- IDDD
+- PPPoDDD
+- DDD
+- [Martin Fowler - ValueObject](https://martinfowler.com/bliki/ValueObject.html)

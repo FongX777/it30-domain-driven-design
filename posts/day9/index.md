@@ -1,5 +1,6 @@
 # Event Storming Part 3 - 軟體設計
 
+-> Aggregate 先不命名，先寫 Invariant
 -> Bounded Context Canvas
 
 ![cover photo](https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)

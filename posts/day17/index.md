@@ -1,4 +1,4 @@
-# DDD 戰術設計：Module 設計
+# DDD 戰術設計：Aggregate 聚合設計 (續)
 
 ## Entity 給我定義定義
 
