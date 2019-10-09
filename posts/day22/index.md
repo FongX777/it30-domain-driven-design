@@ -1,100 +1,300 @@
-# DDD 戰術設計：Application Service 2 - 結合 TDD/BDD
+# DDD 戰術設計：Application Service 3 - 結合 TDD/BDD (續)
 
-很多人接觸 DDD 時，認為 DDD 「不夠敏捷」而放棄它。但事實上，有了 DDD 的諸多設計原則，反而可以讓你更容易加入測試，加快迭代的速度。
+今天來用一個案例來說明如何利用 TDD/BDD 來撰寫一個 Application Service。讓我們來看看如何實作一個簡單的註冊功能。
 
-本篇就在現代分層式架構下，如何使用 TDD/BDD 來開發一個 Application Service。
+### 步驟 1. 蒐集 Specification By Examples
 
-## TDD/BDD 與現代分層式架構
+在寫程式之前，我們需要先跟我們的商業團隊進行需求溝通，必要時也可以請測試團隊的人來參加。一開始，商業團隊提出了註冊的幾個基本需求：
 
-TDD 是一個「測試先行」的「開發方法」。這個方法的流程會如同下圖所示，分為三個部分：寫一個會失敗的最小測試、讓測試通過、重構，之後再繼續擴展測試。
+1. 使用者要提供名稱、電子郵件、密碼。
+2. Email 不能重複。
+3. 密碼至少要六個字。
 
-![](https://insights-images.thoughtworks.com/TDDInsightspost_32b977819d8d859b10904f332c436718.png)
+但是需求都是破碎的知識細節，我們接著要求商業團隊提出實際的案例或是使用者故事，然後把這些資訊轉為 Gherkin 語法的規格書：
 
-這個開發方法很適合用於撰寫單元測試上，因為單元測試天生就具備體積小、速度快的特性。不過很多人因為程式中的關注點沒有適當的分離，導致單元測試難以撰寫或是拖累速度。
+```cucumber
+Feature: Register a new member
+  As a web user,
+  I want to register on the site to be a member
+  so taht I can use the service provided by the site.
 
-舉一個 REST API 的例子，在正常流程下，一個 Request 打進來後，會先由對應的 Route 接到，處理一下資料格式後 (e.g. `body`、`url encoded` 等)，交給 Controller ，再轉交給 Application Service 處理，而 Application Service 可以使用注入進來的 Infrastructure (e.g. Repository、外部系統) 以及調用 Domain Model 計算業務邏輯來完成任務。
+  The basic information of a member must contain an email address, a password and a name.
 
-不過如果你沒有將外部 IO 那層隔離出來，那你的測試就會需要執行到 HTTP，而如果你沒有將資料庫或是外部系統隔離開來，你甚至需要啟動一個資料庫才能進行測試。
+  Background:
+    Given a web user is on the registration page
 
-有了現代式分層架構將各個關注點分離後，我們可以透過 Test Double (測試替身) 的方式，把程式中有副作用的地方用用自定義、沒有副作用的物件來代替，讓單元測試除了保持高速外，也可以專注於邏輯的驗證。
+  Scenario: Register to be a new member
+    Given the web user has input user information:
+      | email         | password | name |
+      | test@mail.com | 123456   | test |
+    When the web user signed up
+    Then a member should be created
 
-### TDD 的挑戰
+  Scenario: User email must be uniqe
+    Given an existing member with email 'test@mail.com'
+    When the web user inputs email 'test@mmai.com'
+    Then the web user should receive "Email Duplicated" error
 
-透過 TDD 的方法，我們可以在寫程式前透過測試了解程式的目的，幫助我們寫出品質更好的程式碼。但即使有了現代式分層架構的幫助，導入 TDD 仍會遇到一些困難：
-
-1. 真實世界的程式比 TDD Kata 的練習複雜多了
-2. 找不到撰寫測試的起點與終點，而且太多的測試讓開發有點沒有方向，見樹不見林的感覺
-3. 可能導致測試太重視細節，而失去了對於整個業務目標的方向感。
-4. 承上，過於細節的測試也很難維護。
-5. 測試寫出來也不代表你跟領域專家的想法沒有落差，一旦雙方理解不同，測試不就白寫了？
-
-尤其是最後一點，是所有開發人員心中的痛、加班的根源：「需求怎麼又變了」。
-
-因此就有了 BDD 的誕生來試圖解決以上問題。
-
-### BDD 的誕生: 從改善版的 TDD 開始
-
-BDD 是由 Dan North 在 2000 年初期為了教學與練習方便而設計的。一開始，他只是單純的改變了測試的敘述，用一種更「自然」的語言來撰寫。從針對 Class 的 function，變成針對範例寫測試。
-
-就像如下的程式碼所展示，傳統 TDD 單元測試的寫法針對每個公開的 method 做測試，很容易在測試對象變更時壞掉且不好維護。
-
-```js
-// Before
-describe('Test BankAccount', () => {
-  test('BankAccount.transfer', () => {
-    // ...
-  });
-
-  test('BankAccount.deposit', () => {
-    // ...
-  });
-});
+  Scenario: User password length must be >= 6
+    When the web user inputs password '12345'
+    Then the web user should receive "Password Too Short" error
 ```
 
-而如果改成用使用範例描述測試，如下所示，不但程式的功能一目了然，也可以避免寫出太細節且效益低的測試。
+從以上的規格書可以清楚地看到每商業邏輯的需求，以及其前因與後果。接著我們可以來寫第一個測試：
 
-```js
-// After
-describe('When_Transferring_Internation_Funds', () => {
-  it('should_transfer_funds_to_a_local_account', () => {
-    // ...
-  });
-  it('should_transfer_funds_to_a_different_bank', () => {
-    // ...
-  });
-  it('should_deduct_fees_as_a_separate_transaction', () => {
-    // ...
-  });
-});
-```
-
-當 North 發現這樣 unit tests 讀起來更像 specification 且更專注於行為上 (相比傳統 TDD 單元測試只注重驗證)。因此他轉而開始發展出 Behavior-Driven Design。
-
-註：本範例 code 是參考 BDD IN ACTION 一書寫成。
-註：其實 JS framework 使用的 `it()` 就是從 BDD 衍生而來的，這樣讓測試更加好懂，也減少了與主程式間的耦合 (不然一改 method name 測試也要跟著改)
-
-### BDD 決定測試的起點: 由外向內
-
-既然是從範例出發，那測試的方向自然就會由外向內，先定義最外面「要完成什麼」，才走進內部「要實作什麼」。甚至良好的 BDD
-
-## 步驟
-
-### 步驟 1. 蒐集 Spec By Examples
+註：測試方面，我使用的是 Jest 框架。
 
 ### 步驟 2. 撰寫 Application Service Test
 
+在一個 DDD Bounded Context 模組中，會至少建立三層資料夾代表三層架構，分別是 `domain` 、 `application` (或是 `useCase`)、`infrastructure`。我們的第一個測試就寫在 `application` 這一層的 `member` 資料夾下，讓我們先從第一個 Happ Path 的案例開始寫起：
+
+```typescript
+// xxBoundedContext/application/member/RegisterMember.spec.ts
+import {
+  RegisterMemberUsecase,
+  RegisterMemberInput,
+  RegisterMemberOutput
+} from '../index';
+import { InMemeryMemberRepository } from '../../infrastructure/repository/member';
+
+describe('Register a User', function() {
+  it('should succeed', async function() {
+    const name = 'test';
+    const email = 'test@mail.com';
+    const password = '123456';
+    const encryptStub = (str: string): string => str;
+
+    const input: RegisterMemberInput = {
+      name,
+      email,
+      password
+    };
+    const repo = new InMemeryMemberRepository();
+    const usecase = new RegisterMemberUsecase(repo, encryptStub);
+
+    const output: RegisterMemberOutput = await usecase.execute(input, output);
+
+    expect(output.id).not.toBeUndefined();
+    expect(output.name).toBe(name);
+    expect(output.email).toBe(email);
+    expect(repo.member.length).toBe(1);
+  });
+});
+```
+
+當你寫完這個測試時，你會發現你的 IDE 會爬滿紅色底線警告你「這些東西都不存在啊」。不要擔心，讓我們繼續走下去。
+
 ### 步驟 3. 撰寫 Application Service
+
+有了 Application Service 的測試後，照 TDD 的作法，接著我們來寫 Application Service 的程式碼。
+
+```typescript
+// xxBoundedContext/application/member/RegisterMember.ts
+import { MemberRepository, Member } from '../../domain/member';
+
+export class RegisterMemberUsecase {
+  private memberRepo: MemberRepository;
+  // 從外部傳進加密 function
+  private encrypt: (data: string) => string;
+
+  constructor(memberRepo: MemberRepository) {
+    this.memberRepo = memberRepo;
+    this.encrypt = encrypt;
+  }
+
+  async execute(input: RegisterMemberInput): Promise<RegisterMemberOutput> {
+    const { name, email, password } = input;
+
+    const hashedPassword: string = this.encrypt(password);
+
+    const service = new MemberIdentityService(this._encrypt);
+    const [error: string, member: Member] = Member.register({
+      id: this.memberRepo.nextId(),
+      name,
+      email,
+      hashedPassword: password
+    });
+    if (error) {
+      const output: RegisterMemberOutput = {
+        success: false,
+        errorMessage: error;
+      };
+    }
+
+    await this.memberRepo.save(member);
+
+    const output: RegisterMemberOutput = {
+      success: true,
+      member: {
+        id: member.id.toValue(),
+        name: member.name,
+        email: member.email
+      }
+    };
+  }
+}
+
+export interface RegisterMemberInput {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface MemberDto {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface RegisterMemberOutput {
+  success: boolean;
+  member?: MemberDto;
+  errorMessage?: string;
+}
+```
+
+撰寫完 Application Service 後，我們發現還缺少 `domain` 層的 model 以及 `InMemoryMemberRepository` 的實作。
 
 ### 步驟 4. 撰寫 Domain Model Test
 
+來到 `domain` 資料夾下，第一件事還是一樣先建立測試：
+
+```typescript
+// xxBoundedContext/domain/member/model/Member.spec.ts
+import { Member, MemberId } from './Member';
+describe('Member register', () => {
+  const defaultProps = {
+    id: new Member('1'),
+    name: 'test',
+    email: 'test@mail.com',
+    password: '123456'
+  };
+  it('should pass', () => {
+    const props = {
+      ...defaultProps
+    };
+    const [error, member] = Member.register(props);
+
+    expect(error).toBeUndefined();
+    expect(member.id.equals(props.id)).toBeTruthy();
+    expect(member.name).toEqual(props.name);
+    expect(member.email).toEqual(props.email);
+    expect(member.password).toEqual(props.password);
+  });
+  it('should fail for password toot short', () => {
+    const props = {
+      ...defaultProps,
+      // too short
+      password: '00'
+    };
+    const [error, member] = Member.register(props);
+
+    expect(member).toBeUndefined();
+    expect(error).toEqual('Password should contain at least 6 letters');
+  });
+});
+```
+
+可以看到這段測試相對 Application Service 來說易懂許多。
+
 ### 步驟 4. 撰寫 Domain Model
+
+於是我們接著進入 `domain` 資料夾，依據 Application Service 使用案例的需求建立我們的 Model 。
+
+```typescript
+export class MemberId extends EntityId<string> {}
+
+interface MemberProps {
+  id: MemberId;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export class Member extends Entity<MemberId, MemberProps> {
+  get name() {
+    return this.props.name;
+  }
+  get email() {
+    return this.props.email;
+  }
+  get password() {
+    return this.props.password;
+  }
+  static register(props: MemberProps): [string, Member] {
+    if (!passwordRule(props.password)) {
+      // return domain error
+      return ['Password should contain at least 6 letters'];
+    }
+    return [undefined, new Member(props)];
+  }
+}
+
+function passwordRule(password: string): boolean {
+  return password.length > 5;
+}
+```
+
+可以從以上的程式碼注意到幾件與以前寫程式的習慣不同的地方：
+
+1. 寫 Class 時不會追求一次到位。事實上 BDD 認為「當使用者真正需要時」再去寫程式碼，保留時間與精力放在最大價值上。
+2. method 命名時採用遵守 Ubiquitous Language，如使用 `register` 而非 `create`。
+
+寫到這邊，我們再跑一次 `domain` 層的測試。終於！我們有了第一個成功測試。
+
+註：想知道 Enity Base Class 實作的請參考之前的[這篇](https://ithelp.ithome.com.tw/articles/10223150) 與[這篇](https://ithelp.ithome.com.tw/articles/10223595)
+
+### 步驟 5. 撰寫 Repository interface
+
+不過我們別忘了 `domain` 層還需要一個 Repository Interface。
+
+```typescript
+// xxBoundedContext/domain/model/member/MemberRepository.ts
+import { Member, MemberId } from './MemberRepository';
+interface MemberRepository {
+  nextId(): MemberId;
+  ofId(id: MemberId): Promise<Member | undefined>;
+  save(member: Member): Promise<void>;
+}
+```
+
+在 `domain` 層最後，我們用一個 `member/index.ts` 將這一層的 Model 包在一起方便外面引用：
+
+```typescript
+// xxBoundedContext/domain/model/member/index.ts
+export * from './Member';
+export * from './MemberRepository';
+```
 
 ### 步驟 5. 撰寫測試用 Repository
 
-### 步驟 6. 將測試用 Repository 加入 Application Service Test
+離完成 Application Service 只差一個測試用 Repository。在前面 Repository 篇章有提到，可以使用內存實作的 Repository 來幫忙測試。
 
-## Reference
+```typescript
+import {
+  Member,
+  MemberId,
+  MemberRepository
+} from '../../../domain/model/member';
+import newId from 'uuid/v4';
+// xxBoundedContext/infrastructure/repository/member/InMemoryMemberRepository.ts
+class InMemoryMemberRepository implements MemberRepository {
+  members: { [index: MemberId]: Member } = {};
 
+  nextId(): MemberId {
+    return new MemberId(newId());
+  }
+  ofId(id: MemberId): Promise<Member | undefined> {
+    // ...
+  }
+  save(member: Member): Promise<void> {
+    this.members[member.id] = member;
+  }
+}
 ```
 
-```
+### 步驟 6. 回去跑 Application Service 測試
+
+所有配料都到齊後，回去重跑一次你的 Application Service 測試，你會發現全都通過了！
+
+有了一次成功的經驗，你可以用同樣的流程繼續添加測試驗證 Application Service 的行為，而且往後的程式由於有前面的鋪路，會更加好寫！
